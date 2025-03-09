@@ -1,4 +1,7 @@
-﻿using BookLibrary.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BookLibrary.Application.DTOs.Authors;
+using BookLibrary.Application.Interfaces.Repositories;
+using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,32 +11,38 @@ using System.Threading.Tasks;
 
 namespace BookLibrary.Application.Services
 {
-    public class AuthorService
+    public class AuthorService : IAuthorService
     {
         private readonly IAuthorRepository _authorRepository;
+        private readonly IMapper _mapper;
 
-        public AuthorService(IAuthorRepository authorRepository)
+        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
         {
             _authorRepository = authorRepository;
+            _mapper = mapper;
         }
 
-        public async Task<List<Author>> GetAllAuthorsAsync()
+        public async Task<List<AuthorDto>> GetAllAuthorsAsync()
         {
-            return await _authorRepository.GetAllAsync();
+            var authors = await _authorRepository.GetAllAsync();
+            return _mapper.Map<List<AuthorDto>>(authors);
         }
 
-        public async Task<Author> GetByIdAsync(int id)
+        public async Task<AuthorDto> GetByIdAsync(int id)
         {
-            return await _authorRepository.GetByIdAsync(id);
+            var author = await _authorRepository.GetByIdAsync(id);
+            return _mapper.Map<AuthorDto>(author);
         }
 
-        public async Task AddAuthorAsync(Author author)
+        public async Task AddAuthorAsync(AuthorDto authorDto)
         {
+            var author = _mapper.Map<Author>(authorDto);
             await _authorRepository.AddAsync(author);
         }
 
-        public async Task UpdateAuthorAsync(Author author)
+        public async Task UpdateAuthorAsync(AuthorDto authorDto)
         {
+            var author = _mapper.Map<Author>(authorDto);
             await _authorRepository.UpdateAsync(author);    
         }
 

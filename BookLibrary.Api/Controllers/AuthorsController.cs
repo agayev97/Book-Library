@@ -1,4 +1,7 @@
-﻿using BookLibrary.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BookLibrary.Application.DTOs.Authors;
+using BookLibrary.Application.Interfaces.Repositories;
+using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -9,48 +12,50 @@ namespace BookLibrary.Api.Controllers
     [Route("api/[controller]")]
     public class AuthorsController : ControllerBase
     {
-        private readonly IAuthorRepository _authorsRepository;
+        private readonly IAuthorService _authorService;
+        private readonly IMapper _mapper;
 
-        public AuthorsController(IAuthorRepository authorsRepository)
+        public AuthorsController(IAuthorService authorService, IMapper mapper)
         {
-            _authorsRepository = authorsRepository;
+            _authorService = authorService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Author>>> GetAll()
+        public async Task<ActionResult<List<AuthorDto>>> GetAll()
         {
-            var authors = await _authorsRepository.GetAllAsync();
+            var authors = await _authorService.GetAllAuthorsAsync();
             return Ok(authors);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Author>>> GetById(int id)
+        public async Task<ActionResult<List<AuthorDto>>> GetById(int id)
         {
-            var author = await _authorsRepository.GetByIdAsync(id);
+            var author = await _authorService.GetByIdAsync(id);
             if (author == null) return NotFound();
             return Ok(author);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create (Author author)
+        public async Task<ActionResult> Create (AuthorDto authorDto)
         {
-            await _authorsRepository.AddAsync(author);
-            return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
+            await _authorService.AddAuthorAsync(authorDto);
+            return CreatedAtAction(nameof(GetById), new { id = authorDto.Id }, authorDto);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, Author author)
+        public async Task<ActionResult> Update(int id, AuthorDto authorDto)
         {
-            if (id != author.Id) return BadRequest();
-            await _authorsRepository.UpdateAsync(author);
+            if (id != authorDto.Id) return BadRequest();
+            await _authorService.UpdateAuthorAsync(authorDto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var author = await _authorsRepository.GetByIdAsync(id);
+            var author = await _authorService.GetByIdAsync(id);
             if (author == null) return NotFound();
-            await _authorsRepository.DeleteAsync(author);
+            await _authorService.DeleteAuthorAsync(id);
             return NoContent();
         }
     }

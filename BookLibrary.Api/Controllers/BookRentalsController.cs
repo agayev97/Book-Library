@@ -1,4 +1,7 @@
-﻿using BookLibrary.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BookLibrary.Application.DTOs.BookRentals;
+using BookLibrary.Application.Interfaces.Repositories;
+using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,49 +11,51 @@ namespace BookLibrary.Api.Controllers
     [Route("api/[controller]")]
     public class BookRentalsController : ControllerBase
     {
-        private readonly IBookRentalRepository _bookRentalRepository;
+        private readonly IBookRentalService _bookRentalService;
+        private readonly IMapper _mapper;
 
-        public BookRentalsController(IBookRentalRepository bookRentalRepository)
+        public BookRentalsController(IBookRentalService bookRentalService, IMapper mapper)
         {
-            _bookRentalRepository = bookRentalRepository;
+            _bookRentalService = bookRentalService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BookRental>>> GetAll()
+        public async Task<ActionResult<List<BookRentalDto>>> GetAll()
         {
-            var rentals = await _bookRentalRepository.GetAllAsync();
-            return Ok(Ok(rentals));
+            var rentals = await _bookRentalService.GetAllRentalAsync();
+            return Ok(rentals);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookRental>> GetById(int id)
+        public async Task<ActionResult<BookRentalDto>> GetById(int id)
         {
-            var rental = await _bookRentalRepository.GetByIdAsync(id);
+            var rental = await _bookRentalService.GetRentalByIdAsync(id);
             if (rental == null) return NotFound();
             return Ok(rental);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(BookRental rental)
+        public async Task<ActionResult> Create(BookRentalDto rentalDto)
         {
-            await _bookRentalRepository.AddAsync(rental);
-            return CreatedAtAction(nameof(GetById), new { id = rental.Id }, rental);
+            await _bookRentalService.AddBookRentalAsync(rentalDto);
+            return CreatedAtAction(nameof(GetById), new { id = rentalDto.Id }, rentalDto);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id,  BookRental rental)
+        public async Task<ActionResult> Update(int id,  BookRentalDto rentalDto)
         {
-            if(id != rental.Id) return BadRequest();
-            await _bookRentalRepository.UpdateAsync(rental);
+            if(id != rentalDto.Id) return BadRequest();
+            await _bookRentalService.UpdateBookRentalAsync(rentalDto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var rental = await _bookRentalRepository.GetByIdAsync(id);
+            var rental = await _bookRentalService.GetRentalByIdAsync(id);
             if (rental == null) return NotFound();
-            await _bookRentalRepository.DeleteAsync(rental);
+            await _bookRentalService.DeleteRentalAsync(id);
             return NoContent();
         }
 

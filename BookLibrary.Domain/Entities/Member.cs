@@ -8,6 +8,6 @@
         public string PhoneNumber { get; set; }
 
         public ICollection<BookRental> BookRentals { get; set; } = new List<BookRental>();
-        //public DateTime MembershipDate { get; set; } = DateTime.Now;
+       
     }
 }

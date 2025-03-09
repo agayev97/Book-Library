@@ -1,4 +1,8 @@
-﻿using BookLibrary.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BookLibrary.Application.DTOs.BookRentals;
+using BookLibrary.Application.DTOs.Books;
+using BookLibrary.Application.Interfaces.Repositories;
+using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,38 +12,43 @@ using System.Threading.Tasks;
 
 namespace BookLibrary.Application.Services
 {
-    public class BookRentalService
+    public class BookRentalService : IBookRentalService
     {
         private readonly IBookRentalRepository _bookRentalRepository;
+        private readonly IMapper _mapper;
 
-        public BookRentalService(IBookRentalRepository bookRentalRepository)
+        public BookRentalService(IBookRentalRepository bookRentalRepository, IMapper mapper)
         {
             _bookRentalRepository = bookRentalRepository;
+            _mapper = mapper;
         }
 
-        public async Task<List<BookRental>> GetAllRentalAsync()
+        public async Task<List<BookRentalDto>> GetAllRentalAsync()
         {
-            return await _bookRentalRepository.GetAllAsync();
+            var rentals = await _bookRentalRepository.GetAllAsync();
+            return _mapper.Map<List<BookRentalDto>>(rentals);
         }
 
-        public async Task<BookRental> GetRentalByIdAsync(int id)
+        public async Task<BookRentalDto> GetRentalByIdAsync(int id)
         {
-            return await _bookRentalRepository.GetByIdAsync(id);
+            var rental = await _bookRentalRepository.GetByIdAsync(id);
+            return _mapper.Map<BookRentalDto>(rental);
         }
 
-        public async Task RentBookAsync(BookRental bookRental)
+        public async Task AddBookRentalAsync(BookRentalDto bookRentalDto)
         {
+            var bookRental = _mapper.Map<BookRental>(bookRentalDto);
             bookRental.BookRentalDate = DateTime.Now;
             await _bookRentalRepository.AddAsync(bookRental);
         }
 
-        public async Task ReturnBookAsync(int rentalId, DateTime returnDate)
+        public async Task UpdateBookRentalAsync(BookRentalDto bookRentalDto)
         {
-            var rental = await _bookRentalRepository.GetByIdAsync(rentalId);
-            if(rental != null)
+            var existingRental = await _bookRentalRepository.GetByIdAsync(bookRentalDto.Id);
+            if (existingRental != null)
             {
-                rental.ReturnDate = returnDate;
-                await _bookRentalRepository.UpdateAsync(rental);
+                _mapper.Map(bookRentalDto, existingRental);
+                await _bookRentalRepository.UpdateAsync(existingRental);
             }
         }
 

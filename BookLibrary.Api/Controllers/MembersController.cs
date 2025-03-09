@@ -1,4 +1,7 @@
-﻿using BookLibrary.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BookLibrary.Application.DTOs.Members;
+using BookLibrary.Application.Interfaces.Repositories;
+using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,49 +11,51 @@ namespace BookLibrary.Api.Controllers
     [Route("api/[controller]")]
     public class MembersController : ControllerBase
     {
-        private readonly IMemberRepository _memberRepository;
+        private readonly IMemberService _memberService;
+        private readonly IMapper _mapper;
 
-        public MembersController(IMemberRepository memberRepository)
+        public MembersController(IMemberService memberService, IMapper mapper)
         {
-            _memberRepository = memberRepository;
+            _memberService = memberService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Member>>> GetAll()
+        public async Task<ActionResult<List<MemberDto>>> GetAll()
         {
-            var members = await _memberRepository.GetAllAsync();
+            var members = await _memberService.GetAllMembersAsync();
             return Ok(members);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Member>> GetById(int id)
+        public async Task<ActionResult<MemberDto>> GetById(int id)
         {
-            var member = await _memberRepository.GetByIdAsync(id);
+            var member = await _memberService.GetMemberByIdAsync(id);
             if (member == null) return NotFound();
             return Ok(member);  
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Member member)
+        public async Task<ActionResult> Create(MemberDto memberDto)
         {
-            await _memberRepository.AddAsync(member);
-            return CreatedAtAction(nameof(GetById), new { id = member.Id}, member);
+            await _memberService.AddMemberAsync(memberDto);
+            return CreatedAtAction(nameof(GetById), new { id = memberDto.Id}, memberDto);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, Member member)
+        public async Task<ActionResult> Update(int id, MemberDto memberDto)
         {
-            if (id != member.Id) return BadRequest();
-            await _memberRepository.UpdateAsync(member);
+            if (id != memberDto.Id) return BadRequest();
+            await _memberService.UpdateMemberAsync(memberDto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var member = await _memberRepository.GetByIdAsync(id);
+            var member = await _memberService.GetMemberByIdAsync(id);
             if (member == null) return NotFound();
-            await _memberRepository.DeleteAsync(member);
+            await _memberService.DeleteMemberAsync(id);
             return NoContent();
         }
     }
