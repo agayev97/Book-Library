@@ -49,7 +49,7 @@ namespace BookLibrary.Application.Services
         public async Task DeleteAuthorAsync(int id)
         {
             var author = await _authorRepository.GetByIdAsync(id);
-            if(author == null)
+            if(author != null)
             {
                 await _authorRepository.DeleteAsync(author);
             }

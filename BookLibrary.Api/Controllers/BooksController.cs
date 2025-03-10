@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BookLibrary.Application.DTOs.Books;
+﻿using BookLibrary.Application.DTOs.Books;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
@@ -13,12 +12,12 @@ namespace BookLibrary.Api.Controllers
     public class BooksController : ControllerBase 
     {
         private readonly IBookService _bookService;
-        private readonly IMapper _mapper;
+       
 
-        public BooksController(IBookService bookService, IMapper mapper)
+        public BooksController(IBookService bookService)
         {
             _bookService = bookService;
-            _mapper = mapper;
+            
         }
 
         [HttpGet]

@@ -52,6 +52,10 @@ namespace BookLibrary.Infrastructure.Persistence
                 .WithMany(m => m.BookRentals)
                 .HasForeignKey(br => br.MemberId);
 
+            modelBuilder.Entity<BookRental>()
+                .Property(br => br.Id)
+                .ValueGeneratedOnAdd();
+
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Librarian>().ToTable("Librarians");

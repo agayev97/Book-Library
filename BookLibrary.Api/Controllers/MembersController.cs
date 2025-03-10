@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BookLibrary.Application.DTOs.Members;
+﻿using BookLibrary.Application.DTOs.Members;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
@@ -12,12 +11,12 @@ namespace BookLibrary.Api.Controllers
     public class MembersController : ControllerBase
     {
         private readonly IMemberService _memberService;
-        private readonly IMapper _mapper;
+       
 
-        public MembersController(IMemberService memberService, IMapper mapper)
+        public MembersController(IMemberService memberService)
         {
             _memberService = memberService;
-            _mapper = mapper;
+           
         }
 
         [HttpGet]

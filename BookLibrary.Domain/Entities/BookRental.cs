@@ -5,11 +5,10 @@ namespace BookLibrary.Domain.Entities
 {
     public class BookRental
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
+       
         public int Id { get; set; }
 
+        [ForeignKey("Book")]
         public int BookId { get; set; }
         public Book Book { get; set; }
 
