@@ -25,5 +25,5 @@ Bu layihə aşağıdakı texnologiyalardan istifadə edir:
 │── BookLibrary.Domain/       # Domen modelləri (Entities)
 │── BookLibrary.Application/  # Biznes qaydaları (Services, Use Cases)
 │── BookLibrary.Infrastructure/ # Məlumat bazası və Repository-lər
-│── BookLibrary.API/          # Web API və controller-lər
+│── BookLibrary.API/          # Controller-lər
 │── README.md                 # Layihə haqqında məlumat
