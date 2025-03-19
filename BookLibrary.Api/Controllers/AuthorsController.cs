@@ -12,10 +12,10 @@ namespace BookLibrary.Api.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _authorService;
-        
+
 
         public AuthorsController(IAuthorService authorService)
-        {
+        { 
             _authorService = authorService;
         }
 
@@ -34,10 +34,10 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create (AuthorDto authorDto)
+        public async Task<ActionResult> Create (CreateAuthorDto authorDto)
         {
-            await _authorService.AddAuthorAsync(authorDto);
-            return CreatedAtAction(nameof(GetById), new { id = authorDto.Id }, authorDto);
+            var createdAuthor = await _authorService.AddAuthorAsync(authorDto);
+            return CreatedAtAction(nameof(GetById), new { id = createdAuthor.Id }, createdAuthor);
         }
 
         [HttpPut("{id}")]

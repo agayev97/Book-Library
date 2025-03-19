@@ -35,10 +35,10 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(MemberDto memberDto)
+        public async Task<ActionResult> Create(CreateMemberDto memberDto)
         {
-            await _memberService.AddMemberAsync(memberDto);
-            return CreatedAtAction(nameof(GetById), new { id = memberDto.Id}, memberDto);
+            var createMember = await _memberService.AddMemberAsync(memberDto);
+            return CreatedAtAction(nameof(GetById), new { id = createMember.Id}, createMember);
         }
 
         [HttpPut("{id}")]

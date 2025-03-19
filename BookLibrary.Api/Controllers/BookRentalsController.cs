@@ -35,10 +35,10 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(BookRentalDto rentalDto)
+        public async Task<ActionResult> Create(CreateBookRentalDto rentalDto)
         {
-            await _bookRentalService.AddBookRentalAsync(rentalDto);
-            return CreatedAtAction(nameof(GetById), new { id = rentalDto.Id }, rentalDto);
+           var createdRental =  await _bookRentalService.AddBookRentalAsync(rentalDto);
+            return CreatedAtAction(nameof(GetById), new { id = createdRental.Id }, createdRental);
         }
 
         [HttpPut("{id}")]
