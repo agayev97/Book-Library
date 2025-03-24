@@ -34,16 +34,23 @@ namespace BookLibrary.Application.Services
             return _mapper.Map<BookDto>(book);
         }
 
-        public async Task AddBookAsync(BookDto bookDto)
+        public async Task <BookDto>AddBookAsync(CreateBookDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
             await _bookRepository.AddAsync(book);
+            await _bookRepository.SaveChangesAsync();
+
+            return _mapper.Map<BookDto>(book);
         }
 
-        public async Task UpdateBookAsync(BookDto bookDto)
+        public async Task UpdateBookAsync(int id, UpdateBookDto bookDto)
         {
-            var book = _mapper.Map<Book>(bookDto);
+            var book = await _bookRepository.GetByIdAsync(bookDto.Id);
+
+            _mapper.Map(bookDto, book);
+
             await _bookRepository.UpdateAsync(book);
+            await _bookRepository.SaveChangesAsync();
         }
 
         public async Task DeleteBookAsync(int id)
@@ -53,6 +60,8 @@ namespace BookLibrary.Application.Services
             {
                 await _bookRepository.DeleteAsync(book);
             }
+
+            await _bookRepository.SaveChangesAsync();
         }
     }
 }

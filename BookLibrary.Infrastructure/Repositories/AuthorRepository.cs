@@ -27,25 +27,30 @@ namespace BookLibrary.Infrastructure.Repositories
 
         public async Task<Author> GetByIdAsync(int id)
         {
-            return await _context.Authors.Include(a => a.BookAuthors).ThenInclude(ba => ba.Book).FirstOrDefaultAsync(a => a.Id == id);
+            var author = await _context.Authors
+                .Include(a => a.BookAuthors)
+                .ThenInclude(ba => ba.Book)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            return author;
         }
 
         public async Task AddAsync(Author author)
         {
             await _context.Authors.AddAsync(author);
-            await _context.SaveChangesAsync();
+           
         }
         
         public async Task UpdateAsync(Author author)
         {
             _context.Authors.Update(author);
-            await _context.SaveChangesAsync();
+            
         }
 
         public async Task DeleteAsync(Author author)
         {
             _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
+           
         }
 
         public async Task AddBookToAuthorAsync(int authorId, int bookId)
@@ -57,6 +62,11 @@ namespace BookLibrary.Infrastructure.Repositories
             };
 
             await _context.Set<BookAuthor>().AddAsync(bookAuthor);
+            
+        }
+
+        public async Task SaveChangesAsync()
+        {
             await _context.SaveChangesAsync();
         }
     }

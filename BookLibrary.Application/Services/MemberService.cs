@@ -64,7 +64,7 @@ namespace BookLibrary.Application.Services
             return _mapper.Map<LibrarianDto>(librarian);
         }
 
-        public async Task AddMemberAsync(MemberDto memberDto)
+        public async Task <MemberDto>AddMemberAsync(CreateMemberDto memberDto)
         {
             var member = _mapper.Map<Member>(memberDto);
             if(member is User user)
@@ -79,9 +79,12 @@ namespace BookLibrary.Application.Services
             {
                 await _memberRepository.AddAsync(member);
             }
+            await _memberRepository.SaveChangesAsync();
+
+            return _mapper.Map<MemberDto>(member);
         }
 
-        public async Task UpdateMemberAsync(MemberDto memberDto)
+        public async Task UpdateMemberAsync(int id, UpdateMemberDto memberDto)
         {
             var member = _mapper.Map<Member>(memberDto);
             if(member is User user)
@@ -96,6 +99,7 @@ namespace BookLibrary.Application.Services
             {
                 await _memberRepository.UpdateAsync(member);
             }
+            await _memberRepository.SaveChangesAsync();
         }
 
         public async Task DeleteMemberAsync(int id)
@@ -105,6 +109,7 @@ namespace BookLibrary.Application.Services
             {
                 await _memberRepository.DeleteAsync(member);
             }
+            await _memberRepository.SaveChangesAsync();
         }
     }
 }

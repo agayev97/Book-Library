@@ -21,8 +21,8 @@ namespace BookLibrary.Application.Interfaces.Services
         Task<List<LibrarianDto>> GetAllLibrariansAsync();
         Task<LibrarianDto> GetLibrarianByIdAsync(int id);
 
-        Task AddMemberAsync(MemberDto memberDto);
-        Task UpdateMemberAsync(MemberDto memberDto);
+        Task <MemberDto>AddMemberAsync(CreateMemberDto memberDto);
+        Task UpdateMemberAsync(int id, UpdateMemberDto memberDto);
         Task DeleteMemberAsync(int id);
     }
 }

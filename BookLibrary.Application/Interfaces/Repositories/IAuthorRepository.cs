@@ -14,5 +14,6 @@ namespace BookLibrary.Application.Interfaces.Repositories
         Task AddAsync(Author author);
         Task UpdateAsync(Author author);
         Task DeleteAsync(Author author);
+        Task SaveChangesAsync();
     }
 }

@@ -12,8 +12,8 @@ namespace BookLibrary.Application.Interfaces.Services
     {
         Task<List<BookRentalDto>> GetAllRentalAsync();
         Task<BookRentalDto> GetRentalByIdAsync(int id);
-        Task AddBookRentalAsync(BookRentalDto bookRentalDto);
-        Task UpdateBookRentalAsync(BookRentalDto bookRentalDto);
+        Task <BookRentalDto>AddBookRentalAsync(CreateBookRentalDto bookRentalDto);
+        Task UpdateBookRentalAsync(int id, UpdateBookRentalDto bookRentalDto);
         Task DeleteRentalAsync(int id);
     }
 }

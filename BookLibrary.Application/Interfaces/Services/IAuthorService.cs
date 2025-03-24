@@ -12,8 +12,8 @@ namespace BookLibrary.Application.Interfaces.Services
     {
         Task<List<AuthorDto>> GetAllAuthorsAsync();
         Task<AuthorDto> GetByIdAsync(int id);
-        Task AddAuthorAsync(AuthorDto authorDto);
-        Task UpdateAuthorAsync(AuthorDto authorDto);
+        Task<AuthorDto> AddAuthorAsync(CreateAuthorDto authorDto);
+        Task UpdateAuthorAsync(int id, UpdateAuthorDto authorDto);
         Task DeleteAuthorAsync(int id);
     }
 }

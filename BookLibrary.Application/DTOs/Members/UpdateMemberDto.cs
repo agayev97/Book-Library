@@ -8,6 +8,7 @@ namespace BookLibrary.Application.DTOs.Members
 {
     public class UpdateMemberDto
     {
+        public int Id { get; set; }
         public string FullName {  get; set; }
         public string Email {  get; set; }
         public string PhoneNumber {  get; set; }

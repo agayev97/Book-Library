@@ -35,14 +35,18 @@ namespace BookLibrary.Application.Services
             return _mapper.Map<BookRentalDto>(rental);
         }
 
-        public async Task AddBookRentalAsync(BookRentalDto bookRentalDto)
+        public async Task <BookRentalDto>AddBookRentalAsync(CreateBookRentalDto bookRentalDto)
         {
             var bookRental = _mapper.Map<BookRental>(bookRentalDto);
             bookRental.BookRentalDate = DateTime.Now;
+
             await _bookRentalRepository.AddAsync(bookRental);
+            await _bookRentalRepository.SaveChangesAsync();
+
+            return _mapper.Map<BookRentalDto>(bookRental);
         }
 
-        public async Task UpdateBookRentalAsync(BookRentalDto bookRentalDto)
+        public async Task UpdateBookRentalAsync(int id, UpdateBookRentalDto bookRentalDto)
         {
             var existingRental = await _bookRentalRepository.GetByIdAsync(bookRentalDto.Id);
             if (existingRental != null)
@@ -50,6 +54,8 @@ namespace BookLibrary.Application.Services
                 _mapper.Map(bookRentalDto, existingRental);
                 await _bookRentalRepository.UpdateAsync(existingRental);
             }
+
+            await _bookRentalRepository.SaveChangesAsync();
         }
 
         public async Task DeleteRentalAsync(int id)
@@ -59,6 +65,7 @@ namespace BookLibrary.Application.Services
             {
                 await _bookRentalRepository.DeleteAsync(rental);
             }
+            await _bookRentalRepository.SaveChangesAsync();
         }
     }
 

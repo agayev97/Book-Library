@@ -13,8 +13,8 @@ namespace BookLibrary.Application.Interfaces.Services
     {
         Task<List<BookDto>> GetAllBookAsync();
         Task<BookDto> GetBookByIdAsync(int id);
-        Task AddBookAsync(BookDto bookDto);
-        Task UpdateBookAsync(BookDto bookDto);
+        Task <BookDto>AddBookAsync(CreateBookDto bookDto);
+        Task UpdateBookAsync(int id, UpdateBookDto bookDto);
         Task DeleteBookAsync(int id);
     }
 }

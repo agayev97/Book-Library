@@ -37,18 +37,23 @@ namespace BookLibrary.Infrastructure.Repositories
         public async Task AddAsync(Member member)
         {
             await _context.Members.AddAsync(member);
-            await _context.SaveChangesAsync();
+           
         }
 
         public async Task UpdateAsync (Member member)
         {
             _context.Members.Update(member);
-            await _context.SaveChangesAsync();
+            
         }
 
         public async Task DeleteAsync(Member member)
         {
             _context.Members.Remove(member);
+            
+        }
+
+        public async Task SaveChangesAsync()
+        {
             await _context.SaveChangesAsync();
         }
     }

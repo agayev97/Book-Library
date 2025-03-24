@@ -9,6 +9,7 @@ namespace BookLibrary.Application.DTOs.Users
 {
     public class UpdateUserDto : UpdateMemberDto
     {
+        public int Id { get; set; }
         public DateTime MembershipEndDate { get; set; }
 
     }

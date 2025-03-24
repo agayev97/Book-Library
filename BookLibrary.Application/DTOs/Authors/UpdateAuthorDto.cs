@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace BookLibrary.Application.DTOs.Authors
 {
     public class UpdateAuthorDto
-    {  
-        public string FullName {  get; set; }
-        public string Biography {  get; set; }
+    {
+        public int Id { get; set; }
+        public string  FullName {  get; set; }
+        public string  Biography {  get; set; }
     }
 }

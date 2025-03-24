@@ -9,6 +9,7 @@ namespace BookLibrary.Application.DTOs.Librarians
 {
     public class UpdateLibrarianDto : UpdateMemberDto
     {
+        public int Id { get; set; }
         public string EmloyeeId {  get; set; }
         public DateTime HireDate { get; set; }
     }

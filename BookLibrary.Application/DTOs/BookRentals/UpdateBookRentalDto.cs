@@ -8,6 +8,7 @@ namespace BookLibrary.Application.DTOs.BookRentals
 {
     public class UpdateBookRentalDto
     {
+        public int Id { get; set; }
         public DateTime? ReturnDate { get; set; }
     }
 }

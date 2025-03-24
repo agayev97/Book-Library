@@ -38,18 +38,23 @@ namespace BookLibrary.Infrastructure.Repositories
         public async Task AddAsync(BookRental bookRental)
         {
             await _context.BookRentals.AddAsync(bookRental);
-            await _context.SaveChangesAsync();
+           
         }
 
         public async Task UpdateAsync(BookRental bookRental)
         {
             _context.BookRentals.Update(bookRental);
-            await _context.SaveChangesAsync();
+           
         }
 
         public async Task DeleteAsync(BookRental bookRental)
         {
             _context.BookRentals.Remove(bookRental);
+            
+        }
+
+        public async Task SaveChangesAsync()
+        {
             await _context.SaveChangesAsync();
         }
     }
