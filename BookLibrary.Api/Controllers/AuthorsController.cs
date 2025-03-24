@@ -41,10 +41,11 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, AuthorDto authorDto)
+        public async Task<ActionResult> Update(int id, UpdateAuthorDto authorDto)
         {
             if (id != authorDto.Id) return BadRequest();
-            await _authorService.UpdateAuthorAsync(authorDto);
+           
+            await _authorService.UpdateAuthorAsync(id, authorDto);
             return NoContent();
         }
 

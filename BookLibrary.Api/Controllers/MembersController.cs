@@ -42,10 +42,10 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, MemberDto memberDto)
+        public async Task<ActionResult> Update(int id, UpdateMemberDto memberDto)
         {
             if (id != memberDto.Id) return BadRequest();
-            await _memberService.UpdateMemberAsync(memberDto);
+            await _memberService.UpdateMemberAsync(id, memberDto);
             return NoContent();
         }
 
