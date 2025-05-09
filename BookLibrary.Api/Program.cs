@@ -36,6 +36,9 @@ builder.Services.AddScoped<IBookRentalService, BookRentalService>();
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddAuthorization();

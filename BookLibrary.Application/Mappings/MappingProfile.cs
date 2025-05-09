@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.DTOs.Authors;
 using BookLibrary.Application.DTOs.BookRentals;
 using BookLibrary.Application.DTOs.Books;
@@ -47,6 +48,10 @@ namespace BookLibrary.Application.Mappings
             CreateMap<Librarian, LibrarianDto>().ReverseMap();
             CreateMap<Librarian, CreatedLibrarianDto>().ReverseMap();
             CreateMap<Librarian, UpdateLibrarianDto>().ReverseMap();
+
+
+            CreateMap<RegisterRequestDto, User>();
+
         }
     }
 }
