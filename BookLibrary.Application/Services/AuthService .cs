@@ -32,6 +32,7 @@ namespace BookLibrary.Application.Services
             _userRepo = userRepo;
             _userRoleRepo = userRoleRepo;
             _roleRepo = roleRepo;
+            _mapper = mapper;   
         }
 
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto requestDto)
@@ -80,6 +81,7 @@ namespace BookLibrary.Application.Services
             newUser.CreatedAt = DateTime.Now;
 
             await _userRepo.AddAsync(newUser);
+            await _userRepo.SaveChangesAsync();
 
             var roles = await _roleRepo.GetAllAsync();
             var defaultRole = roles.FirstOrDefault(r => r.Name == "User");
@@ -93,8 +95,14 @@ namespace BookLibrary.Application.Services
                 };
 
                 await _userRoleRepo.AddAsync(userRole);
-
+                await _userRoleRepo.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<UserDto>> GetAllUsersAsync()
+        {
+            var users = await _userRepo.GetAllAsync();
+            return _mapper.Map<List<UserDto>>(users);
         }
 
     }

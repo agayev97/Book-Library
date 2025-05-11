@@ -16,6 +16,14 @@ namespace BookLibrary.Api.Controllers
             _authService = authService;
         }
 
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _authService.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto dto)
         {

@@ -1,4 +1,5 @@
 ﻿using BookLibrary.Application.DTOs.Auth;
+using BookLibrary.Application.DTOs.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace BookLibrary.Application.Interfaces.Services
     {
         Task<LoginResponseDto> LoginAsync(LoginRequestDto loginDto);
         Task RegisterAsync(RegisterRequestDto registerDto);
+
+        Task<List<UserDto>> GetAllUsersAsync();
     }
 }
