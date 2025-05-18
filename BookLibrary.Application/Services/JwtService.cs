@@ -41,7 +41,7 @@ namespace BookLibrary.Application.Services
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt: Audience"],
+                audience: _configuration["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddHours(2),
                 signingCredentials: creds

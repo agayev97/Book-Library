@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.DTOs.Users;
+using BookLibrary.Application.Helpers;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
@@ -38,12 +39,20 @@ namespace BookLibrary.Application.Services
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto requestDto)
         {
             var users = await _userRepo.GetAllAsync();
-            var user = users.FirstOrDefault(u => u.UserName == requestDto.UserName && u.Password == requestDto.Password && u.IsActive);
+            var user = users.FirstOrDefault(u => u.UserName == requestDto.UserName && u.IsActive);
 
             if (user == null)
             {
                 throw new Exception("Istifadeci adi ve ya sifre yanlisdir");
             }
+
+            var inputHashedPassword = PasswordHasher.HashPassword(requestDto.Password, user.PasswordSalt);
+
+            if(user.PasswordHash != inputHashedPassword)
+            {
+                throw new Exception("Istifadeci adi ve ya sifre yanlisdir");
+            }
+
 
             var userRoles = await _userRoleRepo.GetAllAsync();
             var roleIds = userRoles
@@ -64,7 +73,8 @@ namespace BookLibrary.Application.Services
             return new LoginResponseDto
             {
                 Token = token,
-                User = userDto
+                User = userDto,
+                Roles = roleNames
             };
         }
 
@@ -76,7 +86,14 @@ namespace BookLibrary.Application.Services
                 throw new Exception("Istifadeci adi ve ya email artiq movcuddur.");
             }
 
+            var salt = PasswordHasher.GenerateSalt();
+            var hashedPassword = PasswordHasher.HashPassword(registerDto.Password, salt);
+
             var newUser = _mapper.Map<User>(registerDto);
+
+            newUser.FullName = $"{registerDto.Name} {registerDto.Surname}";
+            newUser.PasswordSalt = salt;
+            newUser.PasswordHash = hashedPassword;
             newUser.IsActive = true;
             newUser.CreatedAt = DateTime.Now;
 

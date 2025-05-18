@@ -5,6 +5,7 @@ using BookLibrary.Application.DTOs.BookRentals;
 using BookLibrary.Application.DTOs.Books;
 using BookLibrary.Application.DTOs.Librarians;
 using BookLibrary.Application.DTOs.Members;
+using BookLibrary.Application.DTOs.Roles;
 using BookLibrary.Application.DTOs.Users;
 using BookLibrary.Domain.Entities;
 using System;
@@ -51,6 +52,9 @@ namespace BookLibrary.Application.Mappings
 
 
             CreateMap<RegisterRequestDto, User>();
+
+            CreateMap<CreateRoleDto, Role>();
+
 
         }
     }

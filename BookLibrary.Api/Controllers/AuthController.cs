@@ -1,6 +1,5 @@
 ﻿using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.Interfaces.Services;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLibrary.Api.Controllers

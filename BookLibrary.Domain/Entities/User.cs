@@ -3,7 +3,10 @@
     public class User : Member
     {
         public string UserName { get; set; } = null!;
-        public string Password { get; set; } = null!;
+
+        public string PasswordHash { get; set; } = null!;
+        public string PasswordSalt { get; set; } = null!;
+
         public string? Name { get; set; }
         public string? Surname { get; set; }
         public string? FIN {  get; set; }
