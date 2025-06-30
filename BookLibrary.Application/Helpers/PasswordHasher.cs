@@ -19,7 +19,7 @@ namespace BookLibrary.Application.Helpers
             using(var sha256 = SHA256.Create())
             {
                 var hash = sha256.ComputeHash(combined);
-                return Convert.ToBase64String(hash);
+                return Convert.ToBase64String(hash); 
             }
         }
     }

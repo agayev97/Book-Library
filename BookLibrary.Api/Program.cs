@@ -24,12 +24,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 
-builder.Services.AddScoped<IMemberRepository, MemberRepository>();
-builder.Services.AddScoped<IMemberService, MemberService>();
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<ILibrarianRepository, LibrarianRepository>();
 
 builder.Services.AddScoped<IBookRentalRepository, BookRentalRepository>();
 builder.Services.AddScoped<IBookRentalService, BookRentalService>();
@@ -44,6 +40,9 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IUsersService, UserService>();
+
+builder.Services.AddScoped<IBookLocationRepository, BookLocationRepository>();
+builder.Services.AddScoped<IBookLocationService, BookLocationService>();
 
 
 
