@@ -6,7 +6,9 @@ using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Application.Services;
 using BookLibrary.Infrastructure.Repositories;
+using BookLibrary.Infrastructure.Seeder;
 using Microsoft.Extensions.DependencyInjection;
+using BookLibrary.Domain.Entities;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,12 +24,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 
-builder.Services.AddScoped<IMemberRepository, MemberRepository>();
-builder.Services.AddScoped<IMemberService, MemberService>();
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<ILibrarianRepository, LibrarianRepository>();
 
 builder.Services.AddScoped<IBookRentalRepository, BookRentalRepository>();
 builder.Services.AddScoped<IBookRentalService, BookRentalService>();
@@ -36,6 +34,18 @@ builder.Services.AddScoped<IBookRentalService, BookRentalService>();
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddScoped<IUsersService, UserService>();
+
+builder.Services.AddScoped<IBookLocationRepository, BookLocationRepository>();
+builder.Services.AddScoped<IBookLocationService, BookLocationService>();
+
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddAuthorization();
@@ -58,6 +68,14 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleRepo = scope.ServiceProvider.GetRequiredService<IGenericRepository<Role>>();
+    await RoleSeeder.SeedRolesAsync(roleRepo);
+
+}
+
 app.Run();
 
 

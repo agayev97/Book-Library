@@ -83,6 +83,44 @@ namespace BookLibrary.Infrastructure.Migrations
                     b.ToTable("BookAuthors");
                 });
 
+            modelBuilder.Entity("BookLibrary.Domain.Entities.BookLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BuildingNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CabinetNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FloorNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShelfNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId")
+                        .IsUnique();
+
+                    b.ToTable("BookLocations");
+                });
+
             modelBuilder.Entity("BookLibrary.Domain.Entities.BookRental", b =>
                 {
                     b.Property<int>("Id")
@@ -97,22 +135,22 @@ namespace BookLibrary.Infrastructure.Migrations
                     b.Property<DateTime>("BookRentalDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BookRentals");
                 });
 
-            modelBuilder.Entity("BookLibrary.Domain.Entities.Member", b =>
+            modelBuilder.Entity("BookLibrary.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,45 +158,42 @@ namespace BookLibrary.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Members");
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("BookLibrary.Domain.Entities.Librarian", b =>
-                {
-                    b.HasBaseType("BookLibrary.Domain.Entities.Member");
-
-                    b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
-                    b.ToTable("Librarians", (string)null);
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("BookLibrary.Domain.Entities.User", b =>
                 {
-                    b.HasBaseType("BookLibrary.Domain.Entities.Member");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("MembershipEndDate")
                         .HasColumnType("datetime2");
@@ -166,7 +201,45 @@ namespace BookLibrary.Infrastructure.Migrations
                     b.Property<DateTime>("MembershipStartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("BookLibrary.Domain.Entities.UserRole", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("BookLibrary.Domain.Entities.BookAuthor", b =>
@@ -188,6 +261,17 @@ namespace BookLibrary.Infrastructure.Migrations
                     b.Navigation("Book");
                 });
 
+            modelBuilder.Entity("BookLibrary.Domain.Entities.BookLocation", b =>
+                {
+                    b.HasOne("BookLibrary.Domain.Entities.Book", "Book")
+                        .WithOne("BookLocation")
+                        .HasForeignKey("BookLibrary.Domain.Entities.BookLocation", "BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("BookLibrary.Domain.Entities.BookRental", b =>
                 {
                     b.HasOne("BookLibrary.Domain.Entities.Book", "Book")
@@ -196,33 +280,34 @@ namespace BookLibrary.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BookLibrary.Domain.Entities.Member", "Member")
+                    b.HasOne("BookLibrary.Domain.Entities.User", "User")
                         .WithMany("BookRentals")
-                        .HasForeignKey("MemberId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
 
-                    b.Navigation("Member");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BookLibrary.Domain.Entities.Librarian", b =>
+            modelBuilder.Entity("BookLibrary.Domain.Entities.UserRole", b =>
                 {
-                    b.HasOne("BookLibrary.Domain.Entities.Member", null)
-                        .WithOne()
-                        .HasForeignKey("BookLibrary.Domain.Entities.Librarian", "Id")
+                    b.HasOne("BookLibrary.Domain.Entities.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("BookLibrary.Domain.Entities.User", b =>
-                {
-                    b.HasOne("BookLibrary.Domain.Entities.Member", null)
-                        .WithOne()
-                        .HasForeignKey("BookLibrary.Domain.Entities.User", "Id")
+                    b.HasOne("BookLibrary.Domain.Entities.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BookLibrary.Domain.Entities.Author", b =>
@@ -234,12 +319,22 @@ namespace BookLibrary.Infrastructure.Migrations
                 {
                     b.Navigation("BookAuthors");
 
+                    b.Navigation("BookLocation")
+                        .IsRequired();
+
                     b.Navigation("BookRentals");
                 });
 
-            modelBuilder.Entity("BookLibrary.Domain.Entities.Member", b =>
+            modelBuilder.Entity("BookLibrary.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("BookLibrary.Domain.Entities.User", b =>
                 {
                     b.Navigation("BookRentals");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

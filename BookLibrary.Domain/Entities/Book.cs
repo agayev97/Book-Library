@@ -10,6 +10,8 @@
         public ICollection<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
 
         public ICollection<BookRental> BookRentals { get; set; } = new List<BookRental>();
+
+        public BookLocation BookLocation  { get; set; }
     }
 }
  
