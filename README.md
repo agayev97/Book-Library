@@ -1,17 +1,17 @@
-BookLibrary, kitabxana idarəetmə sistemi üçün nəzərdə tutulmuş bir .NET layihəsidir. Bu layihə **Clean Architecture** prinsiplərinə əsaslanır və **Entity Framework Core** istifadə edərək SQL Server-də işləyir.
+BookLibrary is a .NET-based library management system designed with Clean Architecture principles. It uses Entity Framework Core for data access and runs on SQL Server.
 
-  **Xüsusiyyətlər**
--  Kitabların idarə olunması (CRUD)
--  İstifadəçilər (üzvlər, kitabxanaçılar) ilə işləmə
--  Kitab icarəsi və qaytarılması
--  **Clean Architecture** strukturu
--  **Entity Framework Core** ilə SQL Server dəstəyi
--  **Dependency Injection (DI)** tətbiqi
+  **Features**
+-  Book management (CRUD operations)
+-  User management (members and librarians)
+-  Book rental and return functionality
+-  **Clean Architecture** structure
+-  SQL Server support with **Entity Framework Core**
+-  Implementation of **Dependency Injection (DI)**
 -  **ASP.NET Core Web API**
 
 
-  **Texnologiyalar**
-Bu layihə aşağıdakı texnologiyalardan istifadə edir:
+  **Technologies**
+This project uses the following technologies:
 -   **ASP.NET Core**
 -   **Entity Framework Core**
 -   **AutoMapper**
@@ -20,10 +20,10 @@ Bu layihə aşağıdakı texnologiyalardan istifadə edir:
 -   **SQL Server**
 
   
--  **Layihə Strukturu**
+-  **Project Structure**
     BookLibrary/
-│── BookLibrary.Domain/       # Domen modelləri (Entities)
-│── BookLibrary.Application/  # Biznes qaydaları (Services, Use Cases)
-│── BookLibrary.Infrastructure/ # Məlumat bazası və Repository-lər
-│── BookLibrary.API/          # Controller-lər
-│── README.md                 # Layihə haqqında məlumat
+│── BookLibrary.Domain/       # Domain models (Entities)
+│── BookLibrary.Application/  # Business logic (Services, Use‑Cases)
+│── BookLibrary.Infrastructure/ # Data access layer & Repositories
+│── BookLibrary.API/          # Controllers
+│── README.md                 # Project overview
