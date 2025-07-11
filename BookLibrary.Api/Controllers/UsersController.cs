@@ -17,7 +17,6 @@ namespace BookLibrary.Api.Controllers
             _userService = userService;
         }
 
-        // 1. Add User
         [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody] CreateUserDto dto)
         {
@@ -25,7 +24,6 @@ namespace BookLibrary.Api.Controllers
             return Ok("User added successfully.");
         }
 
-        // 2. Edit User
         [HttpPut("edit")]
         public async Task<IActionResult> EditUser([FromBody] UpdateUserDto dto)
         {
@@ -33,7 +31,6 @@ namespace BookLibrary.Api.Controllers
             return Ok("User updated successfully.");
         }
 
-        // 3. Soft delete user
         [HttpDelete("soft-delete/{id}")]
         public async Task<IActionResult> SoftDeleteUser(int id)
         {
@@ -41,7 +38,6 @@ namespace BookLibrary.Api.Controllers
             return Ok("User deleted (soft) successfully.");
         }
 
-        // 4. Get all users with pagination
         [HttpGet("all")]
         public async Task<IActionResult> GetAllUsers(int page = 1, int pageSize = 10)
         {
@@ -49,7 +45,6 @@ namespace BookLibrary.Api.Controllers
             return Ok("users");
         }
 
-        // 5. Get user by ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -63,7 +58,7 @@ namespace BookLibrary.Api.Controllers
             var roles = await _userService.GetAllRolesAsync();
             return Ok(roles);
         }
-        // 6. Add role
+
         [HttpPost("role/add")]
         public async Task<IActionResult> AddRole([FromBody] CreateRoleDto dto)
         {
@@ -71,7 +66,7 @@ namespace BookLibrary.Api.Controllers
             return Ok("Role added successfully.");
         }
 
-        // 7. Edit role
+
         [HttpPut("role/edit")]
         public async Task<IActionResult> EditRole([FromBody] UpdateRoleDto dto)
         {
@@ -79,7 +74,6 @@ namespace BookLibrary.Api.Controllers
             return Ok("Role updated successfully.");
         }
 
-        // 8. Soft delete role
         [HttpDelete("role/soft-delete/{id}")]
         public async Task<IActionResult> SoftDeleteRole(int id)
         {
@@ -87,7 +81,7 @@ namespace BookLibrary.Api.Controllers
             return Ok("Role deleted (soft) successfully.");
         }
 
-        // 9. Assign roles to user
+
         [HttpPost("assign-roles")]
         public async Task<IActionResult> AssignRolesToUser(int userId, [FromBody] List<int> roleIds)
         {
