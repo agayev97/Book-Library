@@ -2,11 +2,7 @@
 using BookLibrary.Domain.Entities;
 using BookLibrary.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BookLibrary.Infrastructure.Repositories
 {
@@ -23,15 +19,15 @@ namespace BookLibrary.Infrastructure.Repositories
         {
             return await _context.BookRentals
                 .Include(br => br.Book)
-                .Include(br => br.Member)
+                .Include(br => br.User)
                 .ToListAsync();
         }
 
-        public async Task<BookRental> GetByIdAsync(int id)
+        public async Task<BookRental?> GetByIdAsync(int id)
         {
             return await _context.BookRentals
                 .Include(br => br.Book)
-                .Include(br => br.Member)
+                .Include(br => br.User)
                 .FirstOrDefaultAsync(br => br.Id == id);
         }
 

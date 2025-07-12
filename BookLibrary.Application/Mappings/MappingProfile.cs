@@ -3,16 +3,10 @@ using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.DTOs.Authors;
 using BookLibrary.Application.DTOs.BookRentals;
 using BookLibrary.Application.DTOs.Books;
-using BookLibrary.Application.DTOs.Librarians;
-using BookLibrary.Application.DTOs.Members;
 using BookLibrary.Application.DTOs.Roles;
 using BookLibrary.Application.DTOs.Users;
 using BookLibrary.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BookLibrary.Application.Mappings
 {
@@ -35,21 +29,10 @@ namespace BookLibrary.Application.Mappings
             CreateMap<BookRental, CreateBookRentalDto>().ReverseMap();
             CreateMap<BookRental, UpdateBookRentalDto>().ReverseMap();
 
-            //Member Mapping
-            CreateMap<Member, MemberDto>().ReverseMap();
-            CreateMap<Member, CreateMemberDto>().ReverseMap();
-            CreateMap<Member, UpdateMemberDto>().ReverseMap();
-
             //User Mapping
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User,CreateUserDto >().ReverseMap();
             CreateMap<User, UpdateUserDto >().ReverseMap();
-
-            //Librarian Mapping
-            CreateMap<Librarian, LibrarianDto>().ReverseMap();
-            CreateMap<Librarian, CreatedLibrarianDto>().ReverseMap();
-            CreateMap<Librarian, UpdateLibrarianDto>().ReverseMap();
-
 
             CreateMap<RegisterRequestDto, User>();
 

@@ -1,13 +1,15 @@
 ﻿namespace BookLibrary.Domain.Entities
 {
-    public class User : Member
+    public class User 
     {
+        public int Id { get; set; }
         public string UserName { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
         public string PasswordHash { get; set; } = null!;
         public string PasswordSalt { get; set; } = null!;
 
-        public string? Name { get; set; }
+        public string? FullName { get; set; }
         public string? Surname { get; set; }
         public string? FIN {  get; set; }
         public bool IsActive {  get; set; }
@@ -19,5 +21,7 @@
         public DateTime MembershipEndDate { get; set;}
 
         public ICollection<UserRole> UserRoles { get; set; }
+
+        public ICollection<BookRental> BookRentals { get; set; } = new List<BookRental>();
     }
 }

@@ -1,10 +1,6 @@
 ﻿using BookLibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BookLibrary.Infrastructure.Persistence
 {
@@ -12,14 +8,12 @@ namespace BookLibrary.Infrastructure.Persistence
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Book> Books {  get; set; }
-        public DbSet<Author> Authors {  get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<BookAuthor> BookAuthors { get; set; }
-        public DbSet<BookRental> BookRentals {  get; set; }
-        public DbSet<Member> Members { get; set; }
-        public DbSet<Librarian> Librarians { get; set; }
+        public DbSet<BookRental> BookRentals { get; set; }
         public DbSet<User> Users { get; set; }
-
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,15 +36,9 @@ namespace BookLibrary.Infrastructure.Persistence
 
 
             modelBuilder.Entity<BookRental>()
-                .HasOne(br => br.Book)
-                .WithMany(b => b.BookRentals)
-                .HasForeignKey(br => br.BookId);
-
-
-            modelBuilder.Entity<BookRental>()
-                .HasOne(br => br.Member)
-                .WithMany(m => m.BookRentals)
-                .HasForeignKey(br => br.MemberId);
+                .HasOne(br => br.User)
+                .WithMany(u => u.BookRentals)
+                .HasForeignKey(br => br.UserId);
 
             modelBuilder.Entity<Book>()
                 .Property(b => b.Id)
@@ -64,13 +52,6 @@ namespace BookLibrary.Infrastructure.Persistence
                 .Property(br => br.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Member>()
-                .Property(m => m.Id)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Librarian>()
-                .Property(l => l.Id)
-                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
@@ -78,16 +59,10 @@ namespace BookLibrary.Infrastructure.Persistence
 
 
             modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Librarian>().ToTable("Librarians");
-
-            modelBuilder.Entity<Member>()
-                .HasIndex(m => m.Email)
-                .IsUnique();
 
             modelBuilder.Entity<Book>()
                 .Property(b => b.IsAvailable)
                 .HasDefaultValue(true);
-
 
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });

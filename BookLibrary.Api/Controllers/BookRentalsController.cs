@@ -1,7 +1,5 @@
 ﻿using BookLibrary.Application.DTOs.BookRentals;
-using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
-using BookLibrary.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLibrary.Api.Controllers

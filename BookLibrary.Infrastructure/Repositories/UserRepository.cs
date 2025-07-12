@@ -2,11 +2,6 @@
 using BookLibrary.Domain.Entities;
 using BookLibrary.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookLibrary.Infrastructure.Repositories
 {
@@ -26,7 +21,7 @@ namespace BookLibrary.Infrastructure.Repositories
 
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             return await _context.Users.Include(u => u.BookRentals).FirstOrDefaultAsync(u => u.Id == id);
         }
