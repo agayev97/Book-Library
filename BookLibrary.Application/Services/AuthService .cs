@@ -90,7 +90,7 @@ namespace BookLibrary.Application.Services
 
             var newUser = _mapper.Map<User>(registerDto);
 
-            newUser.FullName = $"{registerDto.Name} {registerDto.Surname}";
+            newUser.FullName = registerDto.FullName;
             newUser.PasswordSalt = salt;
             newUser.PasswordHash = hashedPassword;
             newUser.IsActive = true;

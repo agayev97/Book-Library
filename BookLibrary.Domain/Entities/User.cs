@@ -8,10 +8,8 @@
         public string PasswordHash { get; set; } = null!;
         public string PasswordSalt { get; set; } = null!;
 
-        public string FullName { get; set; }
-        public string? Name { get; set; }
-        public string? Surname { get; set; }
-        public string Email { get; set; }
+        public string FullName { get; set; } = null!;
+        public string Email { get; set; } = null!;
         public string? FIN {  get; set; }
         public bool IsActive {  get; set; }
 
@@ -21,8 +19,8 @@
         public DateTime MembershipStartDate { get; set; } = DateTime.Now;
         public DateTime MembershipEndDate { get; set;}
 
-        public ICollection<UserRole> UserRoles { get; set; }
-      
+        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
 
         public ICollection<BookRental> BookRentals { get; set; } = new List<BookRental>();
        
