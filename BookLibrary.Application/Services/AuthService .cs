@@ -81,6 +81,8 @@ namespace BookLibrary.Application.Services
         {
             var usersExists = _userRepo.GetAll()
                 .Any(u => u.UserName == registerDto.UserName || u.Email == registerDto.Email);
+
+            if(usersExists)
             {
                 throw new Exception("Istifadeci adi ve ya email artiq movcuddur.");
             }
