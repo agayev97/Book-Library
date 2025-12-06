@@ -1,11 +1,6 @@
 ﻿using BookLibrary.Application.DTOs.Books;
-using BookLibrary.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Sources;
+using BookLibrary.Application.DTOs.Search;
+
 
 namespace BookLibrary.Application.Interfaces.Services
 {
@@ -16,5 +11,7 @@ namespace BookLibrary.Application.Interfaces.Services
         Task <BookDto>AddBookAsync(CreateBookDto bookDto);
         Task UpdateBookAsync(int id, UpdateBookDto bookDto);
         Task DeleteBookAsync(int id);
+
+        Task<List<BookDto>> SearchBookAsync(SearchBooksRequestDto request);
     }
 }

@@ -2,11 +2,6 @@
 using BookLibrary.Domain.Entities;
 using BookLibrary.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookLibrary.Infrastructure.Repositories
 {
@@ -57,6 +52,33 @@ namespace BookLibrary.Infrastructure.Repositories
 
             await _context.Set<BookAuthor>().AddAsync(bookAuthor);
             
+        }
+
+        public async Task <List<Book>> SearchAsync(string? title, string? authorName, int? publishedYear)
+        {
+            var query = _context.Books
+                .Include(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
+                .Include(b => b.BookLocation)
+                .AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(title))
+            {
+                query = query.Where(b => b.Title.Contains(title));
+            }
+
+            if (!string.IsNullOrWhiteSpace(authorName))
+            {
+                query = query.Where(b => b.BookAuthors
+                    .Any(ba => ba.Author.FullName.Contains(authorName)));
+            }
+
+            if(publishedYear.HasValue)
+            {
+                query = query.Where(b => b.PublishedYear == publishedYear.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task SaveChangesAsync()
