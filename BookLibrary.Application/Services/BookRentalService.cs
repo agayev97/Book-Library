@@ -67,6 +67,27 @@ namespace BookLibrary.Application.Services
             }
             await _bookRentalRepository.SaveChangesAsync();
         }
+
+
+        public async Task<List<CurrentReadingBookDto>> GetCurrentReadingBooksAsync(int userId)
+        {
+            var rentals = await _bookRentalRepository.GetCurrentReadingBooksAsync(userId);
+            return _mapper.Map<List<CurrentReadingBookDto>>(rentals);
+        }
+        
+        public async Task<List<CompletedBookDto>> GetCompletedBookDtosAsync(int userId)
+        {
+            var rentals = await _bookRentalRepository.GetCompletedBooksAsync(userId);
+            return _mapper.Map<List<CompletedBookDto>>(rentals);
+        }
+
+        public async Task<List<ReadingHistoryDto>>  GetReadingHistoryAsync(int userId)
+        {
+            var rentals = await _bookRentalRepository.GetReadingHistoryAsync(userId);
+            return _mapper.Map< List< ReadingHistoryDto >> (rentals);
+
+        }
+
     }
 
     

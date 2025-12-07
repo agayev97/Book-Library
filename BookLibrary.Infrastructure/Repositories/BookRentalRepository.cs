@@ -48,6 +48,41 @@ namespace BookLibrary.Infrastructure.Repositories
             
         }
 
+
+         public async Task<List<BookRental>>  GetCurrentReadingBooksAsync(int userId)
+         {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                        .ThenInclude(ba => ba.Author)
+                .Where(br => br.UserId == userId && br.ReturnDate == null)
+                .ToListAsync();
+         }
+
+        public async Task<List<BookRental>>  GetCosmpletedBooksAsync(int userId)
+        {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                        .ThenInclude(ba => ba.Author)
+                .Where(br => br.UserId == userId && br.ReturnDate != null)
+                .ToListAsync();
+        }
+
+        public async Task<List<BookRental>>  GetReadingHistoryAsync(int userId)
+        {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                        .ThenInclude(ba => ba.Author)
+                .Where(br => br.UserId == userId)
+                .OrderByDescending(br => br.BookRentalDate)
+                .ToListAsync();
+        }
+
+       
+
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
