@@ -1,4 +1,5 @@
 ﻿using BookLibrary.Application.DTOs.Books;
+using BookLibrary.Application.DTOs.Search;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
@@ -40,6 +41,13 @@ namespace BookLibrary.Api.Controllers
         {
             var createBook = await _bookService.AddBookAsync(bookDto);
             return CreatedAtAction(nameof(GetById), new {id = createBook.Id}, createBook);
+        }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> Search([FromBody] SearchBooksRequestDto request)
+        {
+            var result = await _bookService.SearchBookAsync(request);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
