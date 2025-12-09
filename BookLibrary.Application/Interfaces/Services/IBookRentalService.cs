@@ -18,6 +18,6 @@ namespace BookLibrary.Application.Interfaces.Services
 
         Task<List<CurrentReadingBookDto>> GetCurrentReadingBooksAsync(int userId);
         Task<List<CompletedBookDto>> GetCompletedAsync(int userId);
-        Task<List<ReadingHistoryDto>> GetReadingHistoryDtos (int userId);
+        Task<List<ReadingHistoryDto>> GetReadingHistoryAsync (int userId);
     }                                                        
 }
