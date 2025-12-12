@@ -59,7 +59,7 @@ namespace BookLibrary.Infrastructure.Repositories
                 .ToListAsync();
          }
 
-        public async Task<List<BookRental>>  GetCosmpletedBooksAsync(int userId)
+        public async Task<List<BookRental>>  GetCompletedBooksAsync(int userId)
         {
             return await _context.BookRentals
                 .Include(br => br.Book)

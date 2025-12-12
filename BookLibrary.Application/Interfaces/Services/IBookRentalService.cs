@@ -17,7 +17,7 @@ namespace BookLibrary.Application.Interfaces.Services
         Task DeleteRentalAsync(int id);
 
         Task<List<CurrentReadingBookDto>> GetCurrentReadingBooksAsync(int userId);
-        Task<List<CompletedBookDto>> GetCompletedAsync(int userId);
-        Task<List<ReadingHistoryDto>> GetReadingHistoryAsync (int userId);
+        Task<List<CompletedBookDto>> GetCompletedBooksAsync(int userId);
+        Task<List<ReadingHistoryDto>> GetReadingHistoryBooksAsync (int userId);
     }                                                        
 }

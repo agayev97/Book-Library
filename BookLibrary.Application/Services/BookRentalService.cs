@@ -75,13 +75,13 @@ namespace BookLibrary.Application.Services
             return _mapper.Map<List<CurrentReadingBookDto>>(rentals);
         }
         
-        public async Task<List<CompletedBookDto>> GetCompletedAsync(int userId)
+        public async Task<List<CompletedBookDto>> GetCompletedBooksAsync(int userId)
         {
             var rentals = await _bookRentalRepository.GetCompletedBooksAsync(userId);
             return _mapper.Map<List<CompletedBookDto>>(rentals);
         }
 
-        public async Task<List<ReadingHistoryDto>>  GetReadingHistoryAsync(int userId)
+        public async Task<List<ReadingHistoryDto>>  GetReadingHistoryBooksAsync(int userId)
         {
             var rentals = await _bookRentalRepository.GetReadingHistoryAsync(userId);
             return _mapper.Map< List< ReadingHistoryDto >> (rentals);
