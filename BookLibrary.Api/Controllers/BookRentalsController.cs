@@ -11,12 +11,12 @@ namespace BookLibrary.Api.Controllers
     public class BookRentalsController : ControllerBase
     {
         private readonly IBookRentalService _bookRentalService;
-        
+
 
         public BookRentalsController(IBookRentalService bookRentalService)
         {
             _bookRentalService = bookRentalService;
-         
+
         }
 
         [HttpGet]
@@ -33,6 +33,29 @@ namespace BookLibrary.Api.Controllers
             if (rental == null) return NotFound();
             return Ok(rental);
         }
+
+
+        [HttpGet("current/{userId}")]
+        public async Task<IActionResult> GetCurrentReading(int userId)
+        {
+            var result = await _bookRentalService.GetCurrentReadingBooksAsync(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("completed/{userId}")]
+        public async Task<IActionResult> GetCompleted(int userId)
+        {
+            var result = await _bookRentalService.GetCompletedBooksAsync(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("history/{userId}")]
+        public async Task<IActionResult> GetReadingHistory(int userId)
+        {
+            var result = await _bookRentalService.GetReadingHistoryBooksAsync(userId);
+            return Ok(result);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateBookRentalDto rentalDto)
