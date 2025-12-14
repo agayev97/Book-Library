@@ -13,5 +13,7 @@ namespace BookLibrary.Application.DTOs.BookRentals
         public int UserId {  get; set; }
         public DateTime BookRentalDate { get; set; }
         public DateTime? ReturnDate {  get; set; }
+        public DateTime? DueDate {  get; set; }
+        public string Status {  get; set; }
     }
 }

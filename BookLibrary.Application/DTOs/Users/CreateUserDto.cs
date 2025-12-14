@@ -12,6 +12,7 @@ namespace BookLibrary.Application.DTOs.Users
         public string Password { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string FullName { get; set; } = null!;
+        public string? PhoneNumber { get; set; }
         public string? FIN { get; set; } = null!;
         public bool IsActive { get; set; } = true;
         public DateTime MembershipStartDate { get; set; } = DateTime.Now;

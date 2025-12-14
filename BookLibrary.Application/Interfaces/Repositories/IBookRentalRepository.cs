@@ -20,5 +20,7 @@ namespace BookLibrary.Application.Interfaces.Repositories
         Task<List<BookRental>> GetReadingHistoryAsync(int userId);
 
         Task SaveChangesAsync();
+
+        Task<List<BookRental>> GetActiveRentalsAsync();
     }
 }

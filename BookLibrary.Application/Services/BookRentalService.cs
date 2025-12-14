@@ -4,6 +4,7 @@ using BookLibrary.Application.DTOs.Books;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
+using BookLibrary.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace BookLibrary.Application.Services
         {
             var bookRental = _mapper.Map<BookRental>(bookRentalDto);
             bookRental.BookRentalDate = DateTime.Now;
+            bookRental.DueDate = DateTime.Now.AddDays(bookRentalDto.RentalDays);
+            bookRental.Status = RentalStatus.Selected;
 
             await _bookRentalRepository.AddAsync(bookRental);
             await _bookRentalRepository.SaveChangesAsync();
@@ -87,6 +90,59 @@ namespace BookLibrary.Application.Services
             return _mapper.Map< List< ReadingHistoryDto >> (rentals);
 
         }
+
+        public async Task ReturnBookAsync(int rentalId)
+        {
+            var rental = await _bookRentalRepository.GetByIdAsync(rentalId);
+            if (rental == null) return;
+
+            rental.ReturnDate = DateTime.Now;
+            rental.Status = RentalStatus.Returned;
+
+            await _bookRentalRepository.UpdateAsync(rental);
+            await _bookRentalRepository.SaveChangesAsync();
+        }
+
+        public async Task ReserveBookAsync(int bookId, int userId)
+        {
+            var rental = new BookRental
+            {
+                BookId = bookId ,
+                UserId = userId ,
+                BookRentalDate = DateTime.Now,
+                Status = RentalStatus.Reserved
+            };
+
+            await _bookRentalRepository.AddAsync(rental);
+            await _bookRentalRepository.SaveChangesAsync();
+        }
+
+        public async Task MarkAsLostAsync(int rentalId)
+        {
+            var rental = await _bookRentalRepository.GetByIdAsync(rentalId);
+            if(rental == null) return;
+
+            rental.Status = RentalStatus.Lost;
+
+            await _bookRentalRepository.UpdateAsync(rental);
+            await _bookRentalRepository.SaveChangesAsync();
+        }
+
+        public async Task MarkOverdueBooksAsync()
+        {
+            var rentals = await _bookRentalRepository.GetActiveRentalsAsync();
+
+            foreach(var rental in rentals )
+            {
+                if(rental.DueDate.HasValue && rental.DueDate < DateTime.Now)
+                {
+                    rental.Status = RentalStatus.Overdue;
+                }
+            }
+
+            await _bookRentalRepository.SaveChangesAsync();
+        }
+
 
     }
 

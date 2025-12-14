@@ -1,5 +1,6 @@
 ﻿using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Domain.Entities;
+using BookLibrary.Domain.Enums;
 using BookLibrary.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,6 +79,19 @@ namespace BookLibrary.Infrastructure.Repositories
                 .Where(br => br.UserId == userId)
                 .OrderByDescending(br => br.BookRentalDate)
                 .ToListAsync();
+        }
+
+
+        public async Task<List<BookRental>> GetActiveRentalsAsync()
+        {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                .Include(br => br.User)
+                .Where(br =>
+                    br.Status == RentalStatus.Selected||
+                    br.Status == RentalStatus.Reserved)
+                .ToListAsync ();
+
         }
 
        

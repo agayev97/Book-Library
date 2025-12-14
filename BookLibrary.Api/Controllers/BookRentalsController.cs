@@ -81,5 +81,20 @@ namespace BookLibrary.Api.Controllers
             return NoContent();
         }
 
+
+        [HttpPost("{id}/return")]
+        public async Task<IActionResult>ReturnBook(int id)
+        {
+            await _bookRentalService.ReturnBookAsync(id);
+            return Ok();
+        }
+
+        [HttpPost("{id}/lost")]
+        public async Task<IActionResult>MarkLost(int id)
+        {
+            await _bookRentalService.MarkAsLostAsync(id);
+            return Ok();
+        }
+
     }
 }

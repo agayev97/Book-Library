@@ -12,12 +12,20 @@ namespace BookLibrary.Application.Interfaces.Services
     {
         Task<List<BookRentalDto>> GetAllRentalAsync();
         Task<BookRentalDto> GetRentalByIdAsync(int id);
-        Task <BookRentalDto>AddBookRentalAsync(CreateBookRentalDto bookRentalDto);
+
+        Task<BookRentalDto> AddBookRentalAsync(CreateBookRentalDto bookRentalDto);
         Task UpdateBookRentalAsync(int id, UpdateBookRentalDto bookRentalDto);
         Task DeleteRentalAsync(int id);
 
         Task<List<CurrentReadingBookDto>> GetCurrentReadingBooksAsync(int userId);
         Task<List<CompletedBookDto>> GetCompletedBooksAsync(int userId);
-        Task<List<ReadingHistoryDto>> GetReadingHistoryBooksAsync (int userId);
-    }                                                        
+        Task<List<ReadingHistoryDto>> GetReadingHistoryBooksAsync(int userId);
+
+        Task ReturnBookAsync(int rentalId);
+        Task ReserveBookAsync(int bookId, int userId);
+        Task MarkAsLostAsync(int rentalId);
+        Task MarkOverdueBooksAsync();
+
+        
+    }
 }
