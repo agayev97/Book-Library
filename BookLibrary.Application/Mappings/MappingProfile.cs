@@ -45,6 +45,7 @@ namespace BookLibrary.Application.Mappings
             CreateMap<RegisterRequestDto, User>();
 
             CreateMap<CreateRoleDto, Role>();
+            CreateMap<UpdateRoleDto, Role>();
 
 
         }

@@ -86,7 +86,9 @@ namespace BookLibrary.Application.Services
 
         public async Task<List<Role>> GetAllRolesAsync()
         {
-            var roles =  _roleRepo.GetAll().ToList();
+            var roles =  _roleRepo.GetAll()
+                .Where(r => r.IsActive)
+                .ToList();
             return roles;
         }
 
