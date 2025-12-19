@@ -4,6 +4,7 @@ using BookLibrary.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookLibrary.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250712182941_AddEmailToUser")]
+    partial class AddEmailToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,44 +84,6 @@ namespace BookLibrary.Infrastructure.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("BookAuthors");
-                });
-
-            modelBuilder.Entity("BookLibrary.Domain.Entities.BookLocation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BuildingNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CabinetNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FloorNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoomNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShelfNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId")
-                        .IsUnique();
-
-                    b.ToTable("BookLocations");
                 });
 
             modelBuilder.Entity("BookLibrary.Domain.Entities.BookRental", b =>
@@ -189,10 +154,6 @@ namespace BookLibrary.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
-<<<<<<< HEAD
-                        .IsRequired()
-=======
->>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -261,17 +222,6 @@ namespace BookLibrary.Infrastructure.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("BookLibrary.Domain.Entities.BookLocation", b =>
-                {
-                    b.HasOne("BookLibrary.Domain.Entities.Book", "Book")
-                        .WithOne("BookLocation")
-                        .HasForeignKey("BookLibrary.Domain.Entities.BookLocation", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
             modelBuilder.Entity("BookLibrary.Domain.Entities.BookRental", b =>
                 {
                     b.HasOne("BookLibrary.Domain.Entities.Book", "Book")
@@ -319,15 +269,9 @@ namespace BookLibrary.Infrastructure.Migrations
                 {
                     b.Navigation("BookAuthors");
 
-                    b.Navigation("BookLocation")
-                        .IsRequired();
-
-<<<<<<< HEAD
                     b.Navigation("BookRentals");
                 });
 
-=======
->>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
             modelBuilder.Entity("BookLibrary.Domain.Entities.Role", b =>
                 {
                     b.Navigation("UserRoles");

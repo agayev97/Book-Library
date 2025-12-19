@@ -7,6 +7,10 @@ using BookLibrary.Application.DTOs.Books;
 using BookLibrary.Application.DTOs.Roles;
 using BookLibrary.Application.DTOs.Users;
 using BookLibrary.Domain.Entities;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
 
 namespace BookLibrary.Application.Mappings
 {
@@ -29,19 +33,25 @@ namespace BookLibrary.Application.Mappings
             CreateMap<BookRental, CreateBookRentalDto>().ReverseMap();
             CreateMap<BookRental, UpdateBookRentalDto>().ReverseMap();
 
+<<<<<<< HEAD
             
 
+=======
+>>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
             //User Mapping
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User,CreateUserDto >().ReverseMap();
             CreateMap<User, UpdateUserDto >().ReverseMap();
 
+<<<<<<< HEAD
 
             //BookLocation
             CreateMap<BookLocation, BookLocationDto>().ReverseMap();
             CreateMap<BookLocation, CreateBookLocationDto>().ReverseMap();
             CreateMap<BookLocation, UpdateBookLocationDto>().ReverseMap();
 
+=======
+>>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
             CreateMap<RegisterRequestDto, User>();
 
             CreateMap<CreateRoleDto, Role>();

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+=======
+﻿
+>>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
 namespace BookLibrary.Application.DTOs.Users
 {
     public class CreateUserDto 

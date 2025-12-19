@@ -8,13 +8,19 @@ namespace BookLibrary.Infrastructure.Persistence
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Book> Books {  get; set; }
-        public DbSet<Author> Authors {  get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<BookAuthor> BookAuthors { get; set; }
+<<<<<<< HEAD
         public DbSet<BookRental> BookRentals {  get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<BookLocation> BookLocations { get; set; }
 
+=======
+        public DbSet<BookRental> BookRentals { get; set; }
+        public DbSet<User> Users { get; set; }
+       
+>>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,12 +71,15 @@ namespace BookLibrary.Infrastructure.Persistence
                 .Property(b => b.IsAvailable)
                 .HasDefaultValue(true);
 
+<<<<<<< HEAD
             modelBuilder.Entity<Book>()
                 .HasOne(b => b.BookLocation)
                 .WithOne(bl => bl.Book)
                 .HasForeignKey<BookLocation>(bl => bl.BookId);
 
 
+=======
+>>>>>>> 30a375c37371e3ee478ce5c054475b0d9c23f210
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
