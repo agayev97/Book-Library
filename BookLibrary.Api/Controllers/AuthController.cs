@@ -1,6 +1,8 @@
 ﻿using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookLibrary.Api.Controllers
 {
@@ -14,7 +16,7 @@ namespace BookLibrary.Api.Controllers
         {
             _authService = authService;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -26,7 +28,12 @@ namespace BookLibrary.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto dto)
         {
+
             var result = await _authService.LoginAsync(dto);
+                if (result == null)
+                return Unauthorized("Email ve ya sifre sehvdir.");
+
+
             return Ok(result);
 
         }
@@ -34,8 +41,34 @@ namespace BookLibrary.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequestDto dto)
         {
-            await _authService.RegisterAsync(dto);
-            return Ok("Istifadeci ugurla qeydiyatdan kecdi.");
+            try
+            {
+                await _authService.RegisterAsync(dto);
+                return Ok("Istifadeci ugurla qeydiyatdan kecdi.");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
+
+        [Authorize]
+        [HttpGet("me")]
+        public IActionResult Me()
+        {
+            return Ok(new
+            {
+                Id = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserName = User.Identity!.Name,
+                FullName = User.FindFirstValue(ClaimTypes.GivenName),
+                Email = User.FindFirstValue(ClaimTypes.Email),
+                Phone = User.FindFirstValue(ClaimTypes.MobilePhone),
+                Fin = User.FindFirst("fin")?.Value,
+                IsActive = User.FindFirst("is_active")?.Value,
+                Roles = User.FindAll(ClaimTypes.Role).Select(r => r.Value)
+            });
         }
     }
 }
