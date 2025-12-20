@@ -67,13 +67,11 @@ namespace BookLibrary.Application.Services
 
 
             var token = _jwtService.GenerateToken(user, roleNames);
-            var userDto = _mapper.Map<UserDto>(user);
+           
 
             return new LoginResponseDto
             {
                 Token = token,
-                User = userDto,
-                Roles = roleNames
             };
         }
 

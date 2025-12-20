@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using BookLibrary.Infrastructure.Persistence;
 using BookLibrary.Application.Mappings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using AutoMapper;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
@@ -9,6 +12,10 @@ using BookLibrary.Infrastructure.Repositories;
 using BookLibrary.Infrastructure.Seeder;
 using Microsoft.Extensions.DependencyInjection;
 using BookLibrary.Domain.Entities;
+using Microsoft.OpenApi.Models;
+
+using Microsoft.IdentityModel.Tokens.Experimental;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +51,67 @@ builder.Services.AddScoped<IUsersService, UserService>();
 builder.Services.AddScoped<IBookLocationRepository, BookLocationRepository>();
 builder.Services.AddScoped<IBookLocationService, BookLocationService>();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+        )
+
+    };
+    
+
+});
+
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "BookLibrary.Api",
+        Version = "v1"
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT token - i bu formatda daxil et: Bearer {token}"
+
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            } ,
+            Array.Empty<string>()
+        }
+    });
+
+});
 
 
 builder.Services.AddControllers();
@@ -51,7 +119,6 @@ builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -64,6 +131,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
