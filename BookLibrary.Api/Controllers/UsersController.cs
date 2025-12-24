@@ -1,6 +1,8 @@
 ﻿using BookLibrary.Application.DTOs.Roles;
 using BookLibrary.Application.DTOs.Users;
 using BookLibrary.Application.Interfaces.Services;
+using BookLibrary.Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
@@ -8,6 +10,7 @@ namespace BookLibrary.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = Roles.Admin)]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _userService;
@@ -42,7 +45,7 @@ namespace BookLibrary.Api.Controllers
         public async Task<IActionResult> GetAllUsers(int page = 1, int pageSize = 10)
         {
             var users = await _userService.GetAllUsersAsync(page, pageSize);
-            return Ok("users");
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
