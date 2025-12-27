@@ -27,7 +27,7 @@ namespace BookLibrary.Api.Controllers
             return Ok("User added successfully.");
         }
 
-        [HttpPut("{id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditUser([FromBody] UpdateUserDto dto)
         {
             await _userService.EditUserAsync(dto);
