@@ -20,14 +20,14 @@ namespace BookLibrary.Api.Controllers
             _userService = userService;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] CreateUserDto dto)
         {
             await _userService.AddUserAsync(dto);
             return Ok("User added successfully.");
         }
 
-        [HttpPut("edit")]
+        [HttpPut("{id")]
         public async Task<IActionResult> EditUser([FromBody] UpdateUserDto dto)
         {
             await _userService.EditUserAsync(dto);
@@ -86,9 +86,9 @@ namespace BookLibrary.Api.Controllers
 
 
         [HttpPost("assign-roles")]
-        public async Task<IActionResult> AssignRolesToUser(int userId, [FromBody] List<int> roleIds)
+        public async Task<IActionResult> AssignRolesToUser([FromBody] AssignRolesToUserDto dto)
         {
-            await _userService.AssignRolesToUserAsync(userId, roleIds);
+            await _userService.AssignRolesToUserAsync(dto.UserId, dto.RoleIds);
             return Ok("Roles assigned to user successfully.");
         }
 
