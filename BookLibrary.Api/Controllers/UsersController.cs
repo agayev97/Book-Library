@@ -1,6 +1,8 @@
 ﻿using BookLibrary.Application.DTOs.Roles;
 using BookLibrary.Application.DTOs.Users;
 using BookLibrary.Application.Interfaces.Services;
+using BookLibrary.Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
@@ -8,6 +10,7 @@ namespace BookLibrary.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = Roles.Admin)]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _userService;
@@ -17,14 +20,14 @@ namespace BookLibrary.Api.Controllers
             _userService = userService;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] CreateUserDto dto)
         {
             await _userService.AddUserAsync(dto);
             return Ok("User added successfully.");
         }
 
-        [HttpPut("edit")]
+        [HttpPut("{id")]
         public async Task<IActionResult> EditUser([FromBody] UpdateUserDto dto)
         {
             await _userService.EditUserAsync(dto);
@@ -42,7 +45,7 @@ namespace BookLibrary.Api.Controllers
         public async Task<IActionResult> GetAllUsers(int page = 1, int pageSize = 10)
         {
             var users = await _userService.GetAllUsersAsync(page, pageSize);
-            return Ok("users");
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
@@ -83,9 +86,9 @@ namespace BookLibrary.Api.Controllers
 
 
         [HttpPost("assign-roles")]
-        public async Task<IActionResult> AssignRolesToUser(int userId, [FromBody] List<int> roleIds)
+        public async Task<IActionResult> AssignRolesToUser([FromBody] AssignRolesToUserDto dto)
         {
-            await _userService.AssignRolesToUserAsync(userId, roleIds);
+            await _userService.AssignRolesToUserAsync(dto.UserId, dto.RoleIds);
             return Ok("Roles assigned to user successfully.");
         }
 

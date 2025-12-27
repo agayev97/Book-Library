@@ -1,5 +1,6 @@
 ﻿using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.Interfaces.Services;
+using BookLibrary.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -16,15 +17,8 @@ namespace BookLibrary.Api.Controllers
         {
             _authService = authService;
         }
-        [Authorize(Roles = "Admin")]
-        [HttpGet("users")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var users = await _authService.GetAllUsersAsync();
-            return Ok(users);
-        }
 
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto dto)
         {
@@ -38,6 +32,7 @@ namespace BookLibrary.Api.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequestDto dto)
         {
@@ -54,7 +49,6 @@ namespace BookLibrary.Api.Controllers
         }
 
 
-        [Authorize]
         [HttpGet("me")]
         public IActionResult Me()
         {
