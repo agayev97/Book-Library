@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 
 using Microsoft.IdentityModel.Tokens.Experimental;
 using System.Reflection;
+using System.Security.Claims;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,7 +70,10 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
-        )
+        ),
+
+        RoleClaimType = ClaimTypes.Role,
+        NameClaimType = ClaimTypes.Name
 
     };
     
