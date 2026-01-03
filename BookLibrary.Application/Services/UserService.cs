@@ -42,6 +42,21 @@ namespace BookLibrary.Application.Services
             user.IsActive = true;
             await _userRepo.AddAsync(user);
             await _userRepo.SaveChangesAsync();
+
+            var defaultRole = _roleRepo.GetAll()
+                .FirstOrDefault(r => r.Name == "User" && r.IsActive);
+
+            if (defaultRole != null)
+            {
+                var userRole = new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = defaultRole.Id
+                };
+
+                await _userRoleRepo.AddAsync(userRole);
+                await _userRoleRepo.SaveChangesAsync();
+            }
         }
 
         public async Task EditUserAsync(UpdateUserDto dto)
