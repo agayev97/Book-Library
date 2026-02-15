@@ -15,5 +15,8 @@ namespace BookLibrary.Application.Interfaces.Repositories
         Task UpdateAsync(Book book);
         Task DeleteAsync(Book book);
         Task SaveChangesAsync();
+
+
+        Task<List<Book>> SearchAsync(string? title, string? authorName, int? year);
     }
 }

@@ -16,9 +16,9 @@ namespace BookLibrary.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public IQueryable<T> GetAll()
         {
-            return await _dbSet.ToListAsync();
+            return _dbSet.AsQueryable();
         }
 
         public async Task<T> GetByIdAsync(int id)

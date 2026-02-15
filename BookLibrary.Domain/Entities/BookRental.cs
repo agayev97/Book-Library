@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BookLibrary.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookLibrary.Domain.Entities
@@ -18,5 +19,10 @@ namespace BookLibrary.Domain.Entities
 
         public DateTime BookRentalDate { get; set; } = DateTime.Now;
         public DateTime? ReturnDate { get; set; }
+
+        public DateTime? DueDate { get; set; }
+
+        public RentalStatus Status { get; set; }
+
     }
 }

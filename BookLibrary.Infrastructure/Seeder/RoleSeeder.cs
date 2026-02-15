@@ -7,14 +7,26 @@ namespace BookLibrary.Infrastructure.Seeder
     {
         public static async Task SeedRolesAsync(IGenericRepository<Role> roleRepo)
         {
-            var existingRoles = await roleRepo.GetAllAsync();
             var roleNames = new[] { "Admin", "User", "Librarian" };
+            var existingRoles = roleRepo.GetAll().ToList();
 
-            foreach(var roleName in roleNames)
+            foreach (var roleName in roleNames)
             {
-                if(!existingRoles.Any(r => r.Name == roleName))
+                var role = existingRoles
+                    .FirstOrDefault(r => r.Name.ToLower() == roleName.ToLower());
+
+                if(role == null)
                 {
-                    await  roleRepo.AddAsync(new Role { Name = roleName });
+                    await roleRepo.AddAsync(new Role
+                    {
+                        Name = roleName,
+                        IsActive = true
+                    });
+                }
+
+                else if(!role.IsActive)
+                {
+                    role.IsActive = true;
                 }
             }
 

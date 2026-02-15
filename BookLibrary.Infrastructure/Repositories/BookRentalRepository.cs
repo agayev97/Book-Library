@@ -1,5 +1,6 @@
 ﻿using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Domain.Entities;
+using BookLibrary.Domain.Enums;
 using BookLibrary.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,6 +48,54 @@ namespace BookLibrary.Infrastructure.Repositories
             _context.BookRentals.Remove(bookRental);
             
         }
+
+
+         public async Task<List<BookRental>>  GetCurrentReadingBooksAsync(int userId)
+         {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                        .ThenInclude(ba => ba.Author)
+                .Where(br => br.UserId == userId && br.ReturnDate == null)
+                .ToListAsync();
+         }
+
+        public async Task<List<BookRental>>  GetCompletedBooksAsync(int userId)
+        {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                        .ThenInclude(ba => ba.Author)
+                .Where(br => br.UserId == userId && br.ReturnDate != null)
+                .ToListAsync();
+        }
+
+        public async Task<List<BookRental>>  GetReadingHistoryAsync(int userId)
+        {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                        .ThenInclude(ba => ba.Author)
+                .Where(br => br.UserId == userId)
+                .OrderByDescending(br => br.BookRentalDate)
+                .ToListAsync();
+        }
+
+
+        public async Task<List<BookRental>> GetActiveRentalsAsync()
+        {
+            return await _context.BookRentals
+                .Include(br => br.Book)
+                .Include(br => br.User)
+                .Where(br =>
+                    br.Status == RentalStatus.Selected||
+                    br.Status == RentalStatus.Reserved)
+                .ToListAsync ();
+
+        }
+
+       
+
 
         public async Task SaveChangesAsync()
         {

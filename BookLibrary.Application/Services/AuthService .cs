@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookLibrary.Application.DTOs.Auth;
 using BookLibrary.Application.DTOs.Users;
+using BookLibrary.Application.Exceptions;
 using BookLibrary.Application.Helpers;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
@@ -38,50 +39,48 @@ namespace BookLibrary.Application.Services
 
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto requestDto)
         {
-            var users = await _userRepo.GetAllAsync();
-            var user = users.FirstOrDefault(u => u.UserName == requestDto.UserName && u.IsActive);
+            var user = _userRepo.GetAll()
+                .FirstOrDefault(u => u.UserName == requestDto.UserName && u.IsActive);
 
             if (user == null)
             {
-                throw new Exception("Istifadeci adi ve ya sifre yanlisdir");
+                throw new UserNotFoundException();
             }
 
             var inputHashedPassword = PasswordHasher.HashPassword(requestDto.Password, user.PasswordSalt);
 
             if(user.PasswordHash != inputHashedPassword)
             {
-                throw new Exception("Istifadeci adi ve ya sifre yanlisdir");
+                throw new InvalidCredentialsException();
             }
 
 
-            var userRoles = await _userRoleRepo.GetAllAsync();
-            var roleIds = userRoles
+            var roleIds =  _userRoleRepo.GetAll()
                 .Where(ur => ur.UserId == user.Id)
                 .Select(ur => ur.RoleId)
                 .ToList();
 
-            var roles = await _roleRepo.GetAllAsync();
-            var roleNames = roles
+            var roleNames = _roleRepo.GetAll()
                 .Where(r => roleIds.Contains(r.Id))
                 .Select(r => r.Name)
                 .ToList();
 
 
             var token = _jwtService.GenerateToken(user, roleNames);
-            var userDto = _mapper.Map<UserDto>(user);
+           
 
             return new LoginResponseDto
             {
                 Token = token,
-                User = userDto,
-                Roles = roleNames
             };
         }
 
         public async Task RegisterAsync(RegisterRequestDto registerDto)
         {
-            var users = await _userRepo.GetAllAsync();
-            if (users.Any(u => u.UserName == registerDto.UserName || u.Email == registerDto.Email))
+            var usersExists = _userRepo.GetAll()
+                .Any(u => u.UserName == registerDto.UserName || u.Email == registerDto.Email);
+
+            if(usersExists)
             {
                 throw new Exception("Istifadeci adi ve ya email artiq movcuddur.");
             }
@@ -91,7 +90,7 @@ namespace BookLibrary.Application.Services
 
             var newUser = _mapper.Map<User>(registerDto);
 
-            newUser.FullName = $"{registerDto.Name} {registerDto.Surname}";
+            newUser.FullName = registerDto.FullName;
             newUser.PasswordSalt = salt;
             newUser.PasswordHash = hashedPassword;
             newUser.IsActive = true;
@@ -100,8 +99,8 @@ namespace BookLibrary.Application.Services
             await _userRepo.AddAsync(newUser);
             await _userRepo.SaveChangesAsync();
 
-            var roles = await _roleRepo.GetAllAsync();
-            var defaultRole = roles.FirstOrDefault(r => r.Name == "User");
+            var defaultRole = _roleRepo.GetAll()
+                .FirstOrDefault(r => r.Name == "User");
 
             if (defaultRole != null)
             {
@@ -118,7 +117,7 @@ namespace BookLibrary.Application.Services
 
         public async Task<List<UserDto>> GetAllUsersAsync()
         {
-            var users = await _userRepo.GetAllAsync();
+            var users = _userRepo.GetAll().ToList();
             return _mapper.Map<List<UserDto>>(users);
         }
 

@@ -9,7 +9,8 @@ namespace BookLibrary.Application.DTOs.BookRentals
     public class CreateBookRentalDto
     {
         public int BookId { get; set; }
-        public int MemberId {  get; set; }
+        public int UserId {  get; set; }
+        public int RentalDays { get; set; }
         public DateTime BookRentalDate {  get; set; } = DateTime.Now;
         public DateTime ReturnDate { get; set; } = DateTime.Now;
     }

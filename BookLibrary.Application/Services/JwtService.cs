@@ -29,6 +29,14 @@ namespace BookLibrary.Application.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
+
+                new Claim(ClaimTypes.GivenName, user.FullName) ,
+                new Claim(ClaimTypes.Email, user.Email) ,
+                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? ""),
+                new Claim("fin", user.FIN ?? ""),
+                new Claim("is_active", user.IsActive.ToString()) ,
+
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             foreach (var role in roles)

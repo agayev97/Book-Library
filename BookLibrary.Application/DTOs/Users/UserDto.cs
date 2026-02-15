@@ -10,8 +10,7 @@ namespace BookLibrary.Application.DTOs.Users
     {
         public int Id { get; set; }
         public string UserName { get; set; }
-        public string? Name { get; set; }
-        public string? Surname { get; set; }
+        public string FullName { get; set; } = null!;
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string? FIN { get; set; }

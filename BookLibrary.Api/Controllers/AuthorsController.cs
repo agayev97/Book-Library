@@ -1,7 +1,9 @@
 ﻿using BookLibrary.Application.DTOs.Authors;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
+using BookLibrary.Domain.Constants;
 using BookLibrary.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
@@ -9,6 +11,7 @@ namespace BookLibrary.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _authorService;
@@ -20,12 +23,14 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Librarian},{Roles.User}")]
         public async Task<ActionResult<List<AuthorDto>>> GetAll()
         {
             var authors = await _authorService.GetAllAuthorsAsync();
             return Ok(authors);
         }
         [HttpGet("{id}")]
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Librarian},{Roles.User}")]
         public async Task<ActionResult<List<AuthorDto>>> GetById(int id)
         {
             var author = await _authorService.GetByIdAsync(id);
@@ -34,6 +39,7 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Librarian}")]
         public async Task<ActionResult> Create (CreateAuthorDto authorDto)
         {
             var createdAuthor = await _authorService.AddAuthorAsync(authorDto);
@@ -41,6 +47,7 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Librarian}")]
         public async Task<ActionResult> Update(int id, UpdateAuthorDto authorDto)
         {
             if (id != authorDto.Id) return BadRequest();
@@ -50,6 +57,7 @@ namespace BookLibrary.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<ActionResult> Delete(int id)
         {
             var author = await _authorService.GetByIdAsync(id);

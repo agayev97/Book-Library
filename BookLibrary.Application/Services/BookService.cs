@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookLibrary.Application.DTOs.Books;
+using BookLibrary.Application.DTOs.Search;
 using BookLibrary.Application.Interfaces.Repositories;
 using BookLibrary.Application.Interfaces.Services;
 using BookLibrary.Domain.Entities;
@@ -62,6 +63,17 @@ namespace BookLibrary.Application.Services
             }
 
             await _bookRepository.SaveChangesAsync();
+        }
+
+        public async Task<List<BookDto>> SearchBookAsync(SearchBooksRequestDto request)
+        {
+            var books = await _bookRepository.SearchAsync(
+                request.Title,
+                request.AuthorName,
+                request.PublishedYear
+            );
+
+            return _mapper.Map<List<BookDto>>(books);
         }
     }
 }
