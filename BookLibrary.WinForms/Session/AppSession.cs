@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookLibrary.WinForms.Services
+namespace BookLibrary.WinForms.Session
 {
     public class AppSession
     {
