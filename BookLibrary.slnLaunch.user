@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "BookLibrary.Api\\BookLibrary.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "BookLibrary.WinForms\\BookLibrary.WinForms.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
