@@ -63,7 +63,7 @@ namespace BookLibrary.WinForms.Forms
                 // Open main form
                 var mainForm = new MainForm();
                 mainForm.Show();
-                this.Hide();
+                //this.Hide();
             }
             catch (HttpRequestException)
             {

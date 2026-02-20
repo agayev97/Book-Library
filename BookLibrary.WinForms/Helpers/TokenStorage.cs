@@ -6,8 +6,27 @@ using System.Threading.Tasks;
 
 namespace BookLibrary.WinForms.Helpers
 {
-    public static class TokenStorage
+    public class TokenStorage
     {
-        public static string Token {  get; set; }
+        private static readonly object _lock = new object();
+        private static string _token;
+
+        public static string Token
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    return _token;
+                }
+            }
+            set
+            {
+                lock (_lock)
+                {
+                    _token = value;
+                }
+            }
+        }
     }
 }
