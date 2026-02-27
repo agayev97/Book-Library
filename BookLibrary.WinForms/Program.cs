@@ -1,22 +1,34 @@
 using BookLibrary.WinForms.Forms;
+using BookLibrary.WinForms.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace BookLibrary.WinForms
 {
-    internal static class Program
+    public static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        public static IServiceProvider Services { get; private set; }
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());
-            Application.EnableVisualStyles();
 
-            
+            var services = new ServiceCollection();
+
+            // Services
+            services.AddSingleton<BooksApiServices>();
+            services.AddSingleton<AuthApiService>(); 
+
+            // Forms
+            services.AddSingleton<LoginForm>();
+            services.AddSingleton<MainForm>();
+
+            Services = services.BuildServiceProvider();
+
+            Application.Run(Services.GetRequiredService<LoginForm>());
         }
+
+      
     }
 }

@@ -2,6 +2,7 @@
 using BookLibrary.WinForms.Models;
 using BookLibrary.WinForms.Services;
 using BookLibrary.WinForms.Session;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ namespace BookLibrary.WinForms.Forms
     public partial class LoginForm : Form
     {
         private readonly AuthApiService _authService;
+        private readonly MainForm _mainForm;
 
-        public LoginForm()
+        public LoginForm(AuthApiService authApiService, MainForm mainForm)
         {
             InitializeComponent();
-            _authService = new AuthApiService();
+            _authService = authApiService;
+            _mainForm = mainForm;
 
             // Set the default button for the form
             this.AcceptButton = loginButton;
@@ -61,8 +64,7 @@ namespace BookLibrary.WinForms.Forms
                 AppSession.Role = loginResponse.Role;
 
                 // Open main form
-                var mainForm = new MainForm();
-                mainForm.Show();
+                _mainForm.Show();
                 //this.Hide();
             }
             catch (HttpRequestException)

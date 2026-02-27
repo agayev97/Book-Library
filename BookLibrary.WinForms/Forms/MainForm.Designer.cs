@@ -50,7 +50,7 @@
             // 
             // panelSidebar
             // 
-            panelSidebar.BackColor = Color.DarkBlue;
+            panelSidebar.BackColor = Color.FromArgb(64, 64, 64);
             panelSidebar.Controls.Add(lblHeadr);
             panelSidebar.Controls.Add(btnUser);
             panelSidebar.Controls.Add(btnBook);
@@ -99,6 +99,7 @@
             btnBook.Text = "Books";
             btnBook.TextAlign = ContentAlignment.MiddleLeft;
             btnBook.UseVisualStyleBackColor = false;
+            btnBook.Click += btnBook_Click;
             // 
             // btnAuthor
             // 
@@ -198,7 +199,7 @@
             dgvBooks.MultiSelect = false;
             dgvBooks.Name = "dgvBooks";
             dgvBooks.ReadOnly = true;
-            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullColumnSelect;
+            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBooks.Size = new Size(900, 450);
             dgvBooks.TabIndex = 4;
             // 

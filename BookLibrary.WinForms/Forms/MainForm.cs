@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookLibrary.WinForms.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,14 +10,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace BookLibrary.WinForms.Forms
 {
     public partial class MainForm : Form
     {
-        public MainForm()
-        {
-            InitializeComponent();
+        private readonly BooksApiServices _booksService;
 
+        public MainForm(BooksApiServices booksService)
+        {
+            _booksService = booksService ?? throw new ArgumentNullException(nameof(booksService));
+
+            InitializeComponent();
 
             ApplyTheme();
             StyleMenuButtons();
@@ -99,6 +104,8 @@ namespace BookLibrary.WinForms.Forms
             dgvBooks.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
 
+            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
             dgvBooks.EnableHeadersVisualStyles = false;
 
             dgvBooks.ColumnHeadersDefaultCellStyle.BackColor =
@@ -127,12 +134,38 @@ namespace BookLibrary.WinForms.Forms
             panel.Region = new Region(path);
         }
 
+       
+
+        private async void btnBook_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var books = await _booksService.GetAllAsync();
+
+                if (books == null || books.Count == 0)
+                {
+                    MessageBox.Show("Bazadan heç bir kitab tapılmadı və ya API boş cavab qaytardı.");
+                    return;
+                }
+
+                dgvBooks.DataSource = null; 
+                dgvBooks.DataSource = books;
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show("Xəta baş verdi: " + ex.Message + "\n" + ex.InnerException?.Message);
+            }
+
+
+        }
+
         protected override CreateParams CreateParams
         {
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ClassStyle |= 0x20000; 
+                cp.ClassStyle |= 0x20000;
                 return cp;
             }
         }
