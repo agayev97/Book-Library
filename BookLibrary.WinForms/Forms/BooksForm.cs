@@ -16,5 +16,10 @@ namespace BookLibrary.WinForms.Forms
         {
             InitializeComponent();
         }
+
+        private void dgwBooks_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

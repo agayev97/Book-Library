@@ -38,10 +38,10 @@
             panelHeader = new Panel();
             label2 = new Label();
             btnLogout = new Button();
-            txtSearch = new TextBox();
-            btnSearch = new Button();
             dgvBooks = new DataGridView();
             panelCard = new Panel();
+            btnSearch = new Button();
+            txtSearch = new TextBox();
             panelSidebar.SuspendLayout();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBooks).BeginInit();
@@ -60,7 +60,7 @@
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(200, 450);
+            panelSidebar.Size = new Size(200, 511);
             panelSidebar.TabIndex = 0;
             // 
             // lblHeadr
@@ -148,7 +148,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(200, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(600, 60);
+            panelHeader.Size = new Size(634, 60);
             panelHeader.TabIndex = 1;
             // 
             // label2
@@ -174,22 +174,6 @@
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = false;
             // 
-            // txtSearch
-            // 
-            txtSearch.Location = new Point(223, 71);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(167, 23);
-            txtSearch.TabIndex = 2;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(413, 71);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(75, 23);
-            btnSearch.TabIndex = 3;
-            btnSearch.Text = "Search";
-            btnSearch.UseVisualStyleBackColor = true;
-            // 
             // dgvBooks
             // 
             dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -200,7 +184,7 @@
             dgvBooks.Name = "dgvBooks";
             dgvBooks.ReadOnly = true;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBooks.Size = new Size(900, 450);
+            dgvBooks.Size = new Size(622, 378);
             dgvBooks.TabIndex = 4;
             // 
             // panelCard
@@ -208,17 +192,33 @@
             panelCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelCard.BackColor = Color.White;
             panelCard.Controls.Add(dgvBooks);
-            panelCard.Location = new Point(200, 100);
+            panelCard.Location = new Point(200, 66);
             panelCard.Name = "panelCard";
-            panelCard.Size = new Size(900, 450);
-            panelCard.TabIndex = 5;
+            panelCard.Size = new Size(622, 378);
+            panelCard.TabIndex = 11;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(180, -34);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(75, 23);
+            btnSearch.TabIndex = 10;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(-10, -34);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(167, 23);
+            txtSearch.TabIndex = 9;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(834, 511);
             Controls.Add(panelCard);
             Controls.Add(btnSearch);
             Controls.Add(txtSearch);
@@ -250,9 +250,9 @@
         private Panel panelHeader;
         private Button btnLogout;
         private Label label2;
-        private TextBox txtSearch;
-        private Button btnSearch;
         private DataGridView dgvBooks;
         private Panel panelCard;
+        private Button btnSearch;
+        private TextBox txtSearch;
     }
 }
