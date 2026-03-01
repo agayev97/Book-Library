@@ -60,7 +60,7 @@
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(200, 511);
+            panelSidebar.Size = new Size(200, 561);
             panelSidebar.TabIndex = 0;
             // 
             // lblHeadr
@@ -148,7 +148,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(200, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(634, 60);
+            panelHeader.Size = new Size(684, 60);
             panelHeader.TabIndex = 1;
             // 
             // label2
@@ -184,7 +184,7 @@
             dgvBooks.Name = "dgvBooks";
             dgvBooks.ReadOnly = true;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBooks.Size = new Size(622, 378);
+            dgvBooks.Size = new Size(672, 378);
             dgvBooks.TabIndex = 4;
             // 
             // panelCard
@@ -194,7 +194,7 @@
             panelCard.Controls.Add(dgvBooks);
             panelCard.Location = new Point(200, 66);
             panelCard.Name = "panelCard";
-            panelCard.Size = new Size(622, 378);
+            panelCard.Size = new Size(672, 378);
             panelCard.TabIndex = 11;
             // 
             // btnSearch
@@ -218,7 +218,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(834, 511);
+            ClientSize = new Size(884, 561);
             Controls.Add(panelCard);
             Controls.Add(btnSearch);
             Controls.Add(txtSearch);
