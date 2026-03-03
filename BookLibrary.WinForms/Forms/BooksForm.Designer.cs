@@ -32,12 +32,12 @@
             pnlHeader = new Panel();
             label1 = new Label();
             pnlBottom = new Panel();
-            btnAdd = new Button();
-            btnEdit = new Button();
             btnDelete = new Button();
+            btnEdit = new Button();
+            btnAdd = new Button();
             pnlSearch = new Panel();
-            txtSearch = new TextBox();
             btnSearch = new Button();
+            txtSearch = new TextBox();
             pnlContent = new Panel();
             dgvBooks = new DataGridView();
             pnlHeader.SuspendLayout();
@@ -78,34 +78,6 @@
             pnlBottom.Size = new Size(854, 70);
             pnlBottom.TabIndex = 2;
             // 
-            // btnAdd
-            // 
-            btnAdd.Anchor = AnchorStyles.Bottom;
-            btnAdd.BackColor = Color.FromArgb(46, 204, 113);
-            btnAdd.FlatAppearance.BorderSize = 0;
-            btnAdd.FlatStyle = FlatStyle.Flat;
-            btnAdd.ForeColor = Color.White;
-            btnAdd.Location = new Point(350, 18);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(100, 35);
-            btnAdd.TabIndex = 0;
-            btnAdd.Text = "Add";
-            btnAdd.UseVisualStyleBackColor = false;
-            // 
-            // btnEdit
-            // 
-            btnEdit.Anchor = AnchorStyles.Bottom;
-            btnEdit.BackColor = Color.FromArgb(243, 156, 18);
-            btnEdit.FlatAppearance.BorderSize = 0;
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.ForeColor = Color.White;
-            btnEdit.Location = new Point(470, 18);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(100, 35);
-            btnEdit.TabIndex = 1;
-            btnEdit.Text = "Edit";
-            btnEdit.UseVisualStyleBackColor = false;
-            // 
             // btnDelete
             // 
             btnDelete.Anchor = AnchorStyles.Bottom;
@@ -120,6 +92,35 @@
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = false;
             // 
+            // btnEdit
+            // 
+            btnEdit.Anchor = AnchorStyles.Bottom;
+            btnEdit.BackColor = Color.FromArgb(243, 156, 18);
+            btnEdit.FlatAppearance.BorderSize = 0;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.ForeColor = Color.White;
+            btnEdit.Location = new Point(470, 18);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(100, 35);
+            btnEdit.TabIndex = 1;
+            btnEdit.Text = "Edit";
+            btnEdit.UseVisualStyleBackColor = false;
+            btnEdit.Click += btnEdit_Click;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Anchor = AnchorStyles.Bottom;
+            btnAdd.BackColor = Color.FromArgb(46, 204, 113);
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.ForeColor = Color.White;
+            btnAdd.Location = new Point(350, 18);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(100, 35);
+            btnAdd.TabIndex = 0;
+            btnAdd.Text = "Add";
+            btnAdd.UseVisualStyleBackColor = false;
+            // 
             // pnlSearch
             // 
             pnlSearch.Controls.Add(btnSearch);
@@ -129,15 +130,6 @@
             pnlSearch.Name = "pnlSearch";
             pnlSearch.Size = new Size(854, 60);
             pnlSearch.TabIndex = 3;
-            // 
-            // txtSearch
-            // 
-            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtSearch.Location = new Point(483, 17);
-            txtSearch.Multiline = true;
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(250, 32);
-            txtSearch.TabIndex = 0;
             // 
             // btnSearch
             // 
@@ -152,6 +144,17 @@
             btnSearch.TabIndex = 1;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtSearch.Location = new Point(483, 17);
+            txtSearch.Multiline = true;
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(250, 32);
+            txtSearch.TabIndex = 0;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // pnlContent
             // 
@@ -167,6 +170,7 @@
             // dgvBooks
             // 
             dgvBooks.AllowUserToAddRows = false;
+            dgvBooks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBooks.BackgroundColor = Color.FromArgb(234, 236, 238);
             dgvBooks.BorderStyle = BorderStyle.None;
@@ -174,17 +178,16 @@
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(214, 234, 248);
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle1.ForeColor = Color.Black;
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(44, 62, 80);
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             dgvBooks.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvBooks.Dock = DockStyle.Fill;
             dgvBooks.Location = new Point(10, 10);
             dgvBooks.MultiSelect = false;
             dgvBooks.Name = "dgvBooks";
             dgvBooks.ReadOnly = true;
-            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullColumnSelect;
             dgvBooks.Size = new Size(834, 307);
             dgvBooks.TabIndex = 0;
             // 
@@ -200,6 +203,7 @@
             Controls.Add(pnlHeader);
             Font = new Font("Segoe UI", 10F);
             ForeColor = Color.FromArgb(44, 62, 80);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "BooksForm";
             Padding = new Padding(15, 17, 15, 17);
             Text = "BooksForm";

@@ -38,14 +38,11 @@
             panelHeader = new Panel();
             label2 = new Label();
             btnLogout = new Button();
-            dgvBooks = new DataGridView();
             panelCard = new Panel();
             btnSearch = new Button();
             txtSearch = new TextBox();
             panelSidebar.SuspendLayout();
             panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvBooks).BeginInit();
-            panelCard.SuspendLayout();
             SuspendLayout();
             // 
             // panelSidebar
@@ -60,7 +57,7 @@
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(200, 511);
+            panelSidebar.Size = new Size(200, 561);
             panelSidebar.TabIndex = 0;
             // 
             // lblHeadr
@@ -148,7 +145,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(200, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(634, 60);
+            panelHeader.Size = new Size(684, 60);
             panelHeader.TabIndex = 1;
             // 
             // label2
@@ -164,6 +161,7 @@
             // 
             // btnLogout
             // 
+            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnLogout.BackColor = Color.Red;
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.ForeColor = Color.White;
@@ -174,27 +172,13 @@
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = false;
             // 
-            // dgvBooks
-            // 
-            dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvBooks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBooks.Dock = DockStyle.Fill;
-            dgvBooks.Location = new Point(0, 0);
-            dgvBooks.MultiSelect = false;
-            dgvBooks.Name = "dgvBooks";
-            dgvBooks.ReadOnly = true;
-            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBooks.Size = new Size(622, 378);
-            dgvBooks.TabIndex = 4;
-            // 
             // panelCard
             // 
-            panelCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelCard.BackColor = Color.White;
-            panelCard.Controls.Add(dgvBooks);
-            panelCard.Location = new Point(200, 66);
+            panelCard.Dock = DockStyle.Fill;
+            panelCard.Location = new Point(200, 60);
             panelCard.Name = "panelCard";
-            panelCard.Size = new Size(622, 378);
+            panelCard.Size = new Size(684, 501);
             panelCard.TabIndex = 11;
             // 
             // btnSearch
@@ -218,7 +202,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(834, 511);
+            ClientSize = new Size(884, 561);
             Controls.Add(panelCard);
             Controls.Add(btnSearch);
             Controls.Add(txtSearch);
@@ -232,8 +216,6 @@
             panelSidebar.PerformLayout();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvBooks).EndInit();
-            panelCard.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -250,7 +232,6 @@
         private Panel panelHeader;
         private Button btnLogout;
         private Label label2;
-        private DataGridView dgvBooks;
         private Panel panelCard;
         private Button btnSearch;
         private TextBox txtSearch;

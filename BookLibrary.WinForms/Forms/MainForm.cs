@@ -16,21 +16,24 @@ namespace BookLibrary.WinForms.Forms
     public partial class MainForm : Form
     {
         private readonly BooksApiServices _booksService;
+        private Form activeForm = null;
 
         public MainForm(BooksApiServices booksService)
         {
             _booksService = booksService ?? throw new ArgumentNullException(nameof(booksService));
 
             InitializeComponent();
+            this.Resize += MainForm_Resize;
 
             ApplyTheme();
             StyleMenuButtons();
-            StyleGrid();
+           
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            UpdatePanelRegions();
             SetRoundedPanel(panelSidebar, 25);
             SetRoundedPanel(panelCard, 20);
         }
@@ -96,29 +99,49 @@ namespace BookLibrary.WinForms.Forms
             }
         }
 
-        private void StyleGrid()
+        private void OpenForm(Form form)
         {
-            dgvBooks.BorderStyle = BorderStyle.None;
-            dgvBooks.BackgroundColor = Color.White;
-            dgvBooks.RowHeadersVisible = false;
-            dgvBooks.AutoSizeColumnsMode =
-                DataGridViewAutoSizeColumnsMode.Fill;
+            if (activeForm != null)
+            {
+                activeForm.Close();
+                activeForm.Dispose();
+            }
 
-            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            activeForm = form;
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
 
-            dgvBooks.EnableHeadersVisualStyles = false;
-
-            dgvBooks.ColumnHeadersDefaultCellStyle.BackColor =
-                Color.FromArgb(240, 240, 240);
-
-            dgvBooks.ColumnHeadersDefaultCellStyle.Font =
-                new Font("Segoe UI", 10, FontStyle.Bold);
-
-            dgvBooks.DefaultCellStyle.SelectionForeColor =
-                Color.Black;
-
+            panelCard.Controls.Clear();
+            panelCard.Controls.Add(form);
+            panelCard.Tag = form;
+            form.BringToFront();
+            form.Show();
         }
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized) return;
+
+            panelHeader.Invalidate();
+            UpdatePanelRegions();
+        }
+
+        private void UpdatePanelRegions()
+        {
+            if (panelSidebar.Width > 0 && panelSidebar.Height > 0)
+                SetRoundedPanel(panelSidebar, 25);
+
+            if (panelCard.Width > 0 && panelCard.Height > 0)
+                SetRoundedPanel(panelCard, 20);
+        }
+
+
+        private  void btnBook_Click(object sender, EventArgs e)
+        {
+            OpenForm(new BooksForm(_booksService));
+
+        }
 
         private void SetRoundedPanel(Panel panel, int radius)
         {
@@ -134,31 +157,6 @@ namespace BookLibrary.WinForms.Forms
             panel.Region = new Region(path);
         }
 
-       
-
-        private async void btnBook_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var books = await _booksService.GetAllAsync();
-
-                if (books == null || books.Count == 0)
-                {
-                    MessageBox.Show("Bazadan heç bir kitab tapılmadı və ya API boş cavab qaytardı.");
-                    return;
-                }
-
-                dgvBooks.DataSource = null; 
-                dgvBooks.DataSource = books;
-            }
-            catch (Exception ex)
-            {
-                
-                MessageBox.Show("Xəta baş verdi: " + ex.Message + "\n" + ex.InnerException?.Message);
-            }
-
-
-        }
 
         protected override CreateParams CreateParams
         {
