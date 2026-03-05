@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookLibrary.WinForms.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,21 @@ namespace BookLibrary.WinForms.Forms
 {
     public partial class AddEditBookForm : Form
     {
-        public AddEditBookForm()
+        private readonly BooksApiServices _booksApiServices;
+        private readonly AuthorsApiService _authorsService;
+        private readonly AuthApiService _authApiService;
+        
+        public AddEditBookForm(
+            BooksApiServices booksApiServices,
+            AuthorsApiService authorsService,
+            AuthApiService authApiService)           
         {
             InitializeComponent();
+            _booksApiServices = booksApiServices;
+            _authorsService = authorsService;
+            _authApiService = authApiService;
+
+            LoadAuthors();
         }
 
         private void SetRoundedRegion(Control control, int radius)
@@ -28,6 +41,23 @@ namespace BookLibrary.WinForms.Forms
             control.Region = new Region(path);
         }
 
-        
+        private async void LoadAuthors()
+        {
+            try
+            {
+                var authors = await _authorsService.GetAllAsync();
+                // Əgər ayrıca AuthorsApiService varsa onu istifadə et
+
+                cmbAuthors.DataSource = authors;
+                cmbAuthors.DisplayMember = "FullName";
+                cmbAuthors.ValueMember = "Id";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Author yüklənərkən xəta: " + ex.Message);
+            }
+        }
+
+
     }
 }

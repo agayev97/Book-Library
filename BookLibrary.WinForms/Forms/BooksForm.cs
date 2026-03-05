@@ -1,5 +1,6 @@
 ﻿using BookLibrary.WinForms.Models;
 using BookLibrary.WinForms.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,11 +16,19 @@ namespace BookLibrary.WinForms.Forms
     public partial class BooksForm : Form
     {
         private readonly BooksApiServices _booksService;
+        private readonly AuthorsApiService _authorsService;
+        private readonly AuthApiService _authApiService;
         private List<BookDto> _allBooks = new();
-        public BooksForm(BooksApiServices booksApiServices)
+        public BooksForm(
+            BooksApiServices booksApiServices,
+            AuthorsApiService authorsApiService
+,           AuthApiService authApiService)
         {
             InitializeComponent();
+
             _booksService = booksApiServices;
+            _authorsService = authorsApiService;
+            _authApiService = authApiService;
 
             StyleGrid();
         }
@@ -87,8 +96,17 @@ namespace BookLibrary.WinForms.Forms
             txtSearch_TextChanged(sender, e);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
+            using (var scope = Program.Services.CreateScope())
+            {
+                var form = scope.ServiceProvider.GetRequiredService<AddEditBookForm>();
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    await LoadBooks();
+                }
+            }
 
         }
     }

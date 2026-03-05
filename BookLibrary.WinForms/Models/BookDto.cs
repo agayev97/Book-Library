@@ -9,6 +9,7 @@ namespace BookLibrary.WinForms.Models
     public class BookDto
     {
         public int Id { get; set; }
+        public int AuthorId { get; set; }
         public string Title { get; set; }
         public int PublishedYear { get; set; }
         public bool IsAvailable { get; set; }

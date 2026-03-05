@@ -16,17 +16,26 @@ namespace BookLibrary.WinForms
 
             var services = new ServiceCollection();
 
+            services.AddHttpClient();
+
             // Services
             services.AddSingleton<BooksApiServices>();
-            services.AddSingleton<AuthApiService>(); 
+            services.AddScoped<AuthorsApiService>();
+            services.AddSingleton<AuthApiService>();
+
+            
 
             // Forms
             services.AddSingleton<LoginForm>();
             services.AddSingleton<MainForm>();
+            services.AddTransient<AddEditBookForm>();
+            services.AddSingleton<BooksForm>();
 
             Services = services.BuildServiceProvider();
 
             Application.Run(Services.GetRequiredService<LoginForm>());
+
+           
         }
 
       

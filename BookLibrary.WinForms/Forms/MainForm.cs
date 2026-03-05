@@ -16,18 +16,27 @@ namespace BookLibrary.WinForms.Forms
     public partial class MainForm : Form
     {
         private readonly BooksApiServices _booksService;
+        private readonly AuthorsApiService _authorsService;
+        private readonly AuthApiService _authApiService;
         private Form activeForm = null;
 
-        public MainForm(BooksApiServices booksService)
+        public MainForm(
+            BooksApiServices booksService,
+            AuthorsApiService authorsService
+,           AuthApiService authApiService)
         {
-            _booksService = booksService ?? throw new ArgumentNullException(nameof(booksService));
+            _booksService = booksService 
+                ?? throw new ArgumentNullException(nameof(booksService));
+
+            authApiService = authApiService
+                ?? throw new ArgumentNullException(nameof(authApiService));
 
             InitializeComponent();
             this.Resize += MainForm_Resize;
 
             ApplyTheme();
             StyleMenuButtons();
-           
+            _authApiService = authApiService;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -139,7 +148,7 @@ namespace BookLibrary.WinForms.Forms
 
         private  void btnBook_Click(object sender, EventArgs e)
         {
-            OpenForm(new BooksForm(_booksService));
+            OpenForm(new BooksForm(_booksService,_authorsService, _authApiService));
 
         }
 
