@@ -10,11 +10,36 @@ using System.Windows.Forms;
 
 namespace BookLibrary.WinForms.Forms
 {
-    public partial class AuthorsForm : Form
+    public partial class FormAuthors : Form
     {
-        public AuthorsForm()
+        public FormAuthors()
         {
             InitializeComponent();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void FormAuthors_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtAuthorBio_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gridAuthors_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
