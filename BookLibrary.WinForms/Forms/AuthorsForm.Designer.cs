@@ -33,26 +33,26 @@
             panelPageTitle = new Panel();
             label1 = new Label();
             panelAddAuthor = new Panel();
+            panelAddBody = new Panel();
+            btnAddAuthor = new Button();
+            txtAuthorBio = new TextBox();
+            lblBio = new Label();
+            txtAuthorName = new TextBox();
+            lblName = new Label();
             panel1 = new Panel();
             lblAddHeader = new Label();
-            panelAddBody = new Panel();
-            lblName = new Label();
-            txtAuthorName = new TextBox();
-            lblBio = new Label();
-            txtAuthorBio = new TextBox();
-            btnAddAuthor = new Button();
             panelActionBar = new Panel();
-            btnNewAuthor = new Button();
-            txtSearch = new TextBox();
             btnSearch = new Button();
+            txtSearch = new TextBox();
+            btnNewAuthor = new Button();
             panelGridContainer = new Panel();
-            gridAuthors = new DataGridView();
             panelPagination = new Panel();
-            btnPage1 = new Button();
-            btnPage2 = new Button();
-            btnPage3 = new Button();
-            btnPage4 = new Button();
             lblPageInfo = new Label();
+            btnPage4 = new Button();
+            btnPage3 = new Button();
+            btnPage2 = new Button();
+            btnPage1 = new Button();
+            gridAuthors = new DataGridView();
             colID = new DataGridViewTextBoxColumn();
             colName = new DataGridViewTextBoxColumn();
             colBio = new DataGridViewTextBoxColumn();
@@ -61,12 +61,12 @@
             pnlHeader.SuspendLayout();
             panelPageTitle.SuspendLayout();
             panelAddAuthor.SuspendLayout();
-            panel1.SuspendLayout();
             panelAddBody.SuspendLayout();
+            panel1.SuspendLayout();
             panelActionBar.SuspendLayout();
             panelGridContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)gridAuthors).BeginInit();
             panelPagination.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridAuthors).BeginInit();
             SuspendLayout();
             // 
             // pnlHeader
@@ -78,7 +78,6 @@
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Size = new Size(984, 40);
             pnlHeader.TabIndex = 0;
-            pnlHeader.Paint += panel1_Paint;
             // 
             // lblHeaderTitle
             // 
@@ -125,6 +124,65 @@
             panelAddAuthor.Size = new Size(984, 151);
             panelAddAuthor.TabIndex = 2;
             // 
+            // panelAddBody
+            // 
+            panelAddBody.Controls.Add(btnAddAuthor);
+            panelAddBody.Controls.Add(txtAuthorBio);
+            panelAddBody.Controls.Add(lblBio);
+            panelAddBody.Controls.Add(txtAuthorName);
+            panelAddBody.Controls.Add(lblName);
+            panelAddBody.Dock = DockStyle.Fill;
+            panelAddBody.Location = new Point(10, 45);
+            panelAddBody.Name = "panelAddBody";
+            panelAddBody.Size = new Size(964, 96);
+            panelAddBody.TabIndex = 1;
+            // 
+            // btnAddAuthor
+            // 
+            btnAddAuthor.BackColor = Color.SeaGreen;
+            btnAddAuthor.FlatStyle = FlatStyle.Flat;
+            btnAddAuthor.ForeColor = Color.White;
+            btnAddAuthor.Location = new Point(822, 47);
+            btnAddAuthor.Name = "btnAddAuthor";
+            btnAddAuthor.Size = new Size(115, 35);
+            btnAddAuthor.TabIndex = 4;
+            btnAddAuthor.Text = "Əlavə Et";
+            btnAddAuthor.UseVisualStyleBackColor = false;
+            // 
+            // txtAuthorBio
+            // 
+            txtAuthorBio.Location = new Point(455, 47);
+            txtAuthorBio.Multiline = true;
+            txtAuthorBio.Name = "txtAuthorBio";
+            txtAuthorBio.Size = new Size(330, 30);
+            txtAuthorBio.TabIndex = 3;
+            // 
+            // lblBio
+            // 
+            lblBio.AutoSize = true;
+            lblBio.Location = new Point(450, 25);
+            lblBio.Name = "lblBio";
+            lblBio.Size = new Size(72, 19);
+            lblBio.TabIndex = 2;
+            lblBio.Text = "Bioqrafiya:";
+            // 
+            // txtAuthorName
+            // 
+            txtAuthorName.Location = new Point(11, 47);
+            txtAuthorName.Multiline = true;
+            txtAuthorName.Name = "txtAuthorName";
+            txtAuthorName.Size = new Size(330, 30);
+            txtAuthorName.TabIndex = 1;
+            // 
+            // lblName
+            // 
+            lblName.AutoSize = true;
+            lblName.Location = new Point(10, 25);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(73, 19);
+            lblName.TabIndex = 0;
+            lblName.Text = "Ad, Soyad:";
+            // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(241, 241, 241);
@@ -145,66 +203,6 @@
             lblAddHeader.TabIndex = 0;
             lblAddHeader.Text = "Yeni Müəllif";
             // 
-            // panelAddBody
-            // 
-            panelAddBody.Controls.Add(btnAddAuthor);
-            panelAddBody.Controls.Add(txtAuthorBio);
-            panelAddBody.Controls.Add(lblBio);
-            panelAddBody.Controls.Add(txtAuthorName);
-            panelAddBody.Controls.Add(lblName);
-            panelAddBody.Dock = DockStyle.Fill;
-            panelAddBody.Location = new Point(10, 45);
-            panelAddBody.Name = "panelAddBody";
-            panelAddBody.Size = new Size(964, 96);
-            panelAddBody.TabIndex = 1;
-            // 
-            // lblName
-            // 
-            lblName.AutoSize = true;
-            lblName.Location = new Point(10, 25);
-            lblName.Name = "lblName";
-            lblName.Size = new Size(73, 19);
-            lblName.TabIndex = 0;
-            lblName.Text = "Ad, Soyad:";
-            // 
-            // txtAuthorName
-            // 
-            txtAuthorName.Location = new Point(11, 47);
-            txtAuthorName.Multiline = true;
-            txtAuthorName.Name = "txtAuthorName";
-            txtAuthorName.Size = new Size(330, 30);
-            txtAuthorName.TabIndex = 1;
-            // 
-            // lblBio
-            // 
-            lblBio.AutoSize = true;
-            lblBio.Location = new Point(450, 25);
-            lblBio.Name = "lblBio";
-            lblBio.Size = new Size(72, 19);
-            lblBio.TabIndex = 2;
-            lblBio.Text = "Bioqrafiya:";
-            // 
-            // txtAuthorBio
-            // 
-            txtAuthorBio.Location = new Point(455, 47);
-            txtAuthorBio.Multiline = true;
-            txtAuthorBio.Name = "txtAuthorBio";
-            txtAuthorBio.Size = new Size(330, 30);
-            txtAuthorBio.TabIndex = 3;
-            txtAuthorBio.TextChanged += txtAuthorBio_TextChanged;
-            // 
-            // btnAddAuthor
-            // 
-            btnAddAuthor.BackColor = Color.SeaGreen;
-            btnAddAuthor.FlatStyle = FlatStyle.Flat;
-            btnAddAuthor.ForeColor = Color.White;
-            btnAddAuthor.Location = new Point(822, 47);
-            btnAddAuthor.Name = "btnAddAuthor";
-            btnAddAuthor.Size = new Size(115, 35);
-            btnAddAuthor.TabIndex = 4;
-            btnAddAuthor.Text = "Əlavə Et";
-            btnAddAuthor.UseVisualStyleBackColor = false;
-            // 
             // panelActionBar
             // 
             panelActionBar.Controls.Add(btnSearch);
@@ -215,6 +213,24 @@
             panelActionBar.Name = "panelActionBar";
             panelActionBar.Size = new Size(984, 60);
             panelActionBar.TabIndex = 3;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(940, 15);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(40, 30);
+            btnSearch.TabIndex = 2;
+            btnSearch.Text = "🔍";
+            btnSearch.UseVisualStyleBackColor = true;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(740, 15);
+            txtSearch.Multiline = true;
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search";
+            txtSearch.Size = new Size(200, 30);
+            txtSearch.TabIndex = 1;
             // 
             // btnNewAuthor
             // 
@@ -228,25 +244,6 @@
             btnNewAuthor.Text = "+ Yeni Müəllif";
             btnNewAuthor.UseVisualStyleBackColor = false;
             // 
-            // txtSearch
-            // 
-            txtSearch.Location = new Point(740, 15);
-            txtSearch.Multiline = true;
-            txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "Search";
-            txtSearch.Size = new Size(200, 30);
-            txtSearch.TabIndex = 1;
-            txtSearch.TextChanged += txtSearch_TextChanged;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(940, 15);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(40, 30);
-            btnSearch.TabIndex = 2;
-            btnSearch.Text = "🔍";
-            btnSearch.UseVisualStyleBackColor = true;
-            // 
             // panelGridContainer
             // 
             panelGridContainer.Controls.Add(panelPagination);
@@ -257,20 +254,6 @@
             panelGridContainer.Padding = new Padding(20);
             panelGridContainer.Size = new Size(984, 381);
             panelGridContainer.TabIndex = 4;
-            // 
-            // gridAuthors
-            // 
-            gridAuthors.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridAuthors.BackgroundColor = Color.White;
-            gridAuthors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridAuthors.Columns.AddRange(new DataGridViewColumn[] { colID, colName, colBio, colEdit, colDelete });
-            gridAuthors.Dock = DockStyle.Fill;
-            gridAuthors.Location = new Point(20, 20);
-            gridAuthors.Name = "gridAuthors";
-            gridAuthors.RowHeadersVisible = false;
-            gridAuthors.Size = new Size(944, 341);
-            gridAuthors.TabIndex = 0;
-            gridAuthors.CellContentClick += gridAuthors_CellContentClick;
             // 
             // panelPagination
             // 
@@ -286,32 +269,14 @@
             panelPagination.Size = new Size(944, 45);
             panelPagination.TabIndex = 1;
             // 
-            // btnPage1
+            // lblPageInfo
             // 
-            btnPage1.Location = new Point(20, 8);
-            btnPage1.Name = "btnPage1";
-            btnPage1.Size = new Size(30, 23);
-            btnPage1.TabIndex = 0;
-            btnPage1.Text = "1";
-            btnPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnPage2
-            // 
-            btnPage2.Location = new Point(60, 8);
-            btnPage2.Name = "btnPage2";
-            btnPage2.Size = new Size(30, 23);
-            btnPage2.TabIndex = 1;
-            btnPage2.Text = "2";
-            btnPage2.UseVisualStyleBackColor = true;
-            // 
-            // btnPage3
-            // 
-            btnPage3.Location = new Point(100, 8);
-            btnPage3.Name = "btnPage3";
-            btnPage3.Size = new Size(30, 23);
-            btnPage3.TabIndex = 2;
-            btnPage3.Text = "3";
-            btnPage3.UseVisualStyleBackColor = true;
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Location = new Point(820, 12);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(68, 19);
+            lblPageInfo.TabIndex = 4;
+            lblPageInfo.Text = "1 - 5 / 25";
             // 
             // btnPage4
             // 
@@ -322,14 +287,45 @@
             btnPage4.Text = "3";
             btnPage4.UseVisualStyleBackColor = true;
             // 
-            // lblPageInfo
+            // btnPage3
             // 
-            lblPageInfo.AutoSize = true;
-            lblPageInfo.Location = new Point(820, 12);
-            lblPageInfo.Name = "lblPageInfo";
-            lblPageInfo.Size = new Size(68, 19);
-            lblPageInfo.TabIndex = 4;
-            lblPageInfo.Text = "1 - 5 / 25";
+            btnPage3.Location = new Point(100, 8);
+            btnPage3.Name = "btnPage3";
+            btnPage3.Size = new Size(30, 23);
+            btnPage3.TabIndex = 2;
+            btnPage3.Text = "3";
+            btnPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnPage2
+            // 
+            btnPage2.Location = new Point(60, 8);
+            btnPage2.Name = "btnPage2";
+            btnPage2.Size = new Size(30, 23);
+            btnPage2.TabIndex = 1;
+            btnPage2.Text = "2";
+            btnPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnPage1
+            // 
+            btnPage1.Location = new Point(20, 8);
+            btnPage1.Name = "btnPage1";
+            btnPage1.Size = new Size(30, 23);
+            btnPage1.TabIndex = 0;
+            btnPage1.Text = "1";
+            btnPage1.UseVisualStyleBackColor = true;
+            // 
+            // gridAuthors
+            // 
+            gridAuthors.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridAuthors.BackgroundColor = Color.White;
+            gridAuthors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridAuthors.Columns.AddRange(new DataGridViewColumn[] { colID, colName, colBio, colEdit, colDelete });
+            gridAuthors.Dock = DockStyle.Fill;
+            gridAuthors.Location = new Point(20, 20);
+            gridAuthors.Name = "gridAuthors";
+            gridAuthors.RowHeadersVisible = false;
+            gridAuthors.Size = new Size(944, 341);
+            gridAuthors.TabIndex = 0;
             // 
             // colID
             // 
@@ -370,26 +366,25 @@
             Controls.Add(panelPageTitle);
             Controls.Add(pnlHeader);
             Font = new Font("Segoe UI", 10F);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "FormAuthors";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Müəllif idarəetməsi";
-            Load += FormAuthors_Load;
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             panelPageTitle.ResumeLayout(false);
             panelPageTitle.PerformLayout();
             panelAddAuthor.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panelAddBody.ResumeLayout(false);
             panelAddBody.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panelActionBar.ResumeLayout(false);
             panelActionBar.PerformLayout();
             panelGridContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)gridAuthors).EndInit();
             panelPagination.ResumeLayout(false);
             panelPagination.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridAuthors).EndInit();
             ResumeLayout(false);
         }
 

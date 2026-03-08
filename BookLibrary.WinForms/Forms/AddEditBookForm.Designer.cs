@@ -112,6 +112,7 @@
             btnAddAuthor.TabIndex = 9;
             btnAddAuthor.Text = "+ Yeni Müəllif";
             btnAddAuthor.UseVisualStyleBackColor = false;
+            btnAddAuthor.Click += btnAddAuthor_Click;
             // 
             // cmbAuthors
             // 
@@ -161,6 +162,7 @@
             btnSave.TabIndex = 0;
             btnSave.Text = "Yadda Saxla";
             btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // numYear
             // 
@@ -230,6 +232,7 @@
             Name = "AddEditBookForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "AddEditBookForm";
+           
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelContent.ResumeLayout(false);

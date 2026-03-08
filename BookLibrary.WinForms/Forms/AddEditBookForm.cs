@@ -1,4 +1,6 @@
-﻿using BookLibrary.WinForms.Services;
+﻿using BookLibrary.WinForms.Helpers;
+using BookLibrary.WinForms.Models;
+using BookLibrary.WinForms.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,18 +18,51 @@ namespace BookLibrary.WinForms.Forms
         private readonly BooksApiServices _booksApiServices;
         private readonly AuthorsApiService _authorsService;
         private readonly AuthApiService _authApiService;
-        
+
         public AddEditBookForm(
             BooksApiServices booksApiServices,
             AuthorsApiService authorsService,
-            AuthApiService authApiService)           
+            AuthApiService authApiService)
         {
             InitializeComponent();
             _booksApiServices = booksApiServices;
             _authorsService = authorsService;
             _authApiService = authApiService;
 
-            LoadAuthors();
+            this.Load += AddEditBookForm_Load;       
+        }
+
+
+        private async void AddEditBookForm_Load(object sender, EventArgs e)
+        {
+            await LoadAuthors();
+        }
+
+        private async Task LoadAuthors()
+        {
+            try
+            {
+                using (var client = HttpHelper.GetClient())
+                {
+                    var response = await client.GetAsync("api/authors");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var authors = await response.Content.ReadAsAsync<List<AuthorDto>>();
+                        cmbAuthors.DataSource = authors;
+                        cmbAuthors.DisplayMember = "FullName"; // DTO-da olan ad
+                        cmbAuthors.ValueMember = "Id";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Müəlliflər gəlmədi. Xəta kodu: " + response.StatusCode);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Xəta baş verdi: " + ex.Message);
+            }
         }
 
         private void SetRoundedRegion(Control control, int radius)
@@ -41,23 +76,51 @@ namespace BookLibrary.WinForms.Forms
             control.Region = new Region(path);
         }
 
-        private async void LoadAuthors()
+
+        private async void btnAddAuthor_Click(object sender, EventArgs e)
         {
+            var authorForm = new FormAuthors();
+            authorForm.ShowDialog();
+            await LoadAuthors(); // Yeni müəllifi əlavə etdikdən sonra müəllimləri yenidən yükləyirik
+
+        }
+
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTitle.Text))
+            {
+                MessageBox.Show("Kitab adı daxil edin.");
+                return;
+            }
+
+            if (cmbAuthors.SelectedIndex == -1)
+            {
+                MessageBox.Show("Müəllif seçin.");
+                return;
+            }
+
+            var bookCreateDto = new bookCreateDto
+            {
+                Title = txtTitle.Text,
+                AuthorIds = new List<int> { (int)cmbAuthors.SelectedValue },
+                PublishedYear = (int)numYear.Value,
+                IsAvailable = chklsAvilable.Checked
+            };
+
             try
             {
-                var authors = await _authorsService.GetAllAsync();
-                // Əgər ayrıca AuthorsApiService varsa onu istifadə et
+                await _booksApiServices.CreateAsync(bookCreateDto);
 
-                cmbAuthors.DataSource = authors;
-                cmbAuthors.DisplayMember = "FullName";
-                cmbAuthors.ValueMember = "Id";
+                MessageBox.Show("Kitab uğurla əlavə edildi!");
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Author yüklənərkən xəta: " + ex.Message);
+                MessageBox.Show("Xəta baş verdi: " + ex.Message);
             }
+
         }
 
-
+       
     }
 }

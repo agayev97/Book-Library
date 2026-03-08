@@ -35,5 +35,16 @@ namespace BookLibrary.WinForms.Services
             return await response.Content
                 .ReadFromJsonAsync<List<BookDto>>();
         }
+
+        public async Task CreateAsync(bookCreateDto bookCreateDto)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AppSession.Token);
+            var response = await _httpClient.PostAsJsonAsync("api/books", bookCreateDto);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Kitab əlavə edilərkən xəta baş verdi.");
+            }
+        }
     }
 }
