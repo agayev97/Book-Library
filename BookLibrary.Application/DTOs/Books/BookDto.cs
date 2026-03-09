@@ -13,6 +13,6 @@ namespace BookLibrary.Application.DTOs.Books
         public int PublishedYear {  get; set; }
         public bool IsAvailable {  get; set; }
 
-        public string AuthorName { get; set; }
+        public List<string> Authors { get; set; }
     }
 }

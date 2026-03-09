@@ -326,6 +326,7 @@
             gridAuthors.RowHeadersVisible = false;
             gridAuthors.Size = new Size(944, 341);
             gridAuthors.TabIndex = 0;
+            
             // 
             // colID
             // 
