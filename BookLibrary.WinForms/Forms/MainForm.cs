@@ -23,9 +23,9 @@ namespace BookLibrary.WinForms.Forms
         public MainForm(
             BooksApiServices booksService,
             AuthorsApiService authorsService
-,           AuthApiService authApiService)
+, AuthApiService authApiService)
         {
-            _booksService = booksService 
+            _booksService = booksService
                 ?? throw new ArgumentNullException(nameof(booksService));
 
             authApiService = authApiService
@@ -146,9 +146,9 @@ namespace BookLibrary.WinForms.Forms
         }
 
 
-        private  void btnBook_Click(object sender, EventArgs e)
+        private void btnBook_Click(object sender, EventArgs e)
         {
-            OpenForm(new BooksForm(_booksService,_authorsService, _authApiService));
+            OpenForm(new BooksForm(_booksService, _authorsService, _authApiService));
 
         }
 
@@ -166,6 +166,7 @@ namespace BookLibrary.WinForms.Forms
             panel.Region = new Region(path);
         }
 
+      
 
         protected override CreateParams CreateParams
         {
