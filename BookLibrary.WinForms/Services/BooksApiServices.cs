@@ -26,17 +26,17 @@ namespace BookLibrary.WinForms.Services
 
             var response = await _httpClient.GetAsync("api/books");
 
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 return new List<BookDto>();
             }
-               
+
 
             return await response.Content
                 .ReadFromJsonAsync<List<BookDto>>();
         }
 
-        public async Task CreateAsync(bookCreateDto bookCreateDto)
+        public async Task CreateAsync(BookLibrary.WinForms.Models.BookCreateDto bookCreateDto)
         {
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AppSession.Token);
@@ -45,6 +45,36 @@ namespace BookLibrary.WinForms.Services
             {
                 throw new Exception("Kitab əlavə edilərkən xəta baş verdi.");
             }
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AppSession.Token);
+
+            var response = await _httpClient.DeleteAsync($"api/books/{id}");
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task UpdateAsync(int id, UpdateBookDto bookDto)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AppSession.Token);
+
+            var response = await _httpClient.PutAsJsonAsync($"api/books/{id}", bookDto);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<BookDto> GetByIdAsync(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AppSession.Token);
+            var response = await _httpClient.GetAsync($"api/books/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Kitab məlumatları gəlmədi.");
+            }
+            return await response.Content.ReadFromJsonAsync<BookDto>() ?? new BookDto();
         }
     }
 }

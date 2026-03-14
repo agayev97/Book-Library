@@ -12,6 +12,8 @@ namespace BookLibrary.WinForms.Models
         public string Title { get; set; }
         public int PublishedYear { get; set; }
         public bool IsAvailable { get; set; }
-        public string AuthorName { get; set; }
+
+        public List<int> AuthorIds { get; set; }
+        public List<string> Authors { get; set; }
     }
 }

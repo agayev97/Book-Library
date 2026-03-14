@@ -23,7 +23,7 @@ namespace BookLibrary.Application.Mappings
             CreateMap<Book, BookDto>()
                 .ForMember(dest => dest.Authors,
                     opt => opt.MapFrom(src =>
-                         src.BookAuthors.Select(x => x.Author.FullName)));
+                         src.BookAuthors.Select(x => x.Author.FullName).ToList()));
 
             CreateMap<Book, CreateBookDto>().ReverseMap();
             CreateMap<Book, UpdateBookDto>().ReverseMap();

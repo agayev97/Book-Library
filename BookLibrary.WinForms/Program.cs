@@ -26,10 +26,10 @@ namespace BookLibrary.WinForms
             
 
             // Forms
-            services.AddSingleton<LoginForm>();
-            services.AddSingleton<MainForm>();
+            services.AddTransient<LoginForm>();
+            services.AddTransient<MainForm>();
             services.AddTransient<AddEditBookForm>();
-            services.AddSingleton<BooksForm>();
+            services.AddTransient<BooksForm>();
 
             Services = services.BuildServiceProvider();
 

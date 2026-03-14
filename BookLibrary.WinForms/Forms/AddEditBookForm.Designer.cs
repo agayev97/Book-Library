@@ -148,6 +148,7 @@
             btnCancel.TabIndex = 1;
             btnCancel.Text = "İmtina Et";
             btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnSave
             // 
@@ -232,7 +233,6 @@
             Name = "AddEditBookForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "AddEditBookForm";
-           
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelContent.ResumeLayout(false);

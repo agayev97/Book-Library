@@ -15,7 +15,7 @@ namespace BookLibrary.WinForms.Helpers
             var client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7114/");
 
-            if(AppSession.IsAuthenticcated)
+            if(AppSession.IsAuthenticated)
             {
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", AppSession.Token);

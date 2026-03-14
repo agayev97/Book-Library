@@ -48,7 +48,14 @@ namespace BookLibrary.WinForms.Forms
                 _allBooks = books ?? new List<BookDto>();
 
                 dgvBooks.DataSource = null;
-                dgvBooks.DataSource = _allBooks;
+                dgvBooks.DataSource = _allBooks.Select(b => new
+                {
+                    b.Id,
+                    b.Title,
+                    b.PublishedYear,
+                    IsAvailable = b.IsAvailable,
+                    AuthorName = b.Authors != null ? string.Join(", ", b.Authors) : "N/A"
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -83,7 +90,17 @@ namespace BookLibrary.WinForms.Forms
             var filteredBooks = _allBooks
                 .Where(b =>
                 b.Title.ToLower().Contains(searchText) ||
-                b.PublishedYear.ToString().Contains(searchText))
+                b.PublishedYear.ToString().Contains(searchText) ||
+                (b.Authors != null && b.Authors.Any(a => a.ToLower().Contains(searchText)))
+                )
+                .Select(b => new
+                {
+                    b.Id,
+                    b.Title,
+                    b.PublishedYear,
+                    IsAvailable = b.IsAvailable,
+                    AuthorName = b.Authors != null ? string.Join(", ", b.Authors) : "N/A"
+                })
                 .ToList();
 
             dgvBooks.DataSource = null;
@@ -109,5 +126,69 @@ namespace BookLibrary.WinForms.Forms
             }
 
         }
+
+        private int GetSelectedBookId()
+        {
+            if (dgvBooks.CurrentRow == null)
+                return -1;
+            return Convert.ToInt32(dgvBooks.CurrentRow.Cells["Id"].Value);
+        }
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = GetSelectedBookId();
+
+                if (id == -1)
+                {
+                    MessageBox.Show("Zəhmət olmasa silmək istədiyiniz kitabı seçin.");
+                    return;
+                }
+
+                var confirm = MessageBox.Show(
+                    "Bu kitabı silmək istədiyinizə əminsinizmi?",
+                    "Təsdiq",
+                    MessageBoxButtons.YesNo);
+
+                if (confirm == DialogResult.Yes)
+                {
+                    await _booksService.DeleteAsync(id);
+                    await LoadBooks();
+                    MessageBox.Show("Kitab uğurla silindi.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Xəta baş verdi:" + ex.Message);
+
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            int id = GetSelectedBookId();
+
+            if (id == -1)
+            {
+                MessageBox.Show("Zəhmət olmasa kitab seçin.");
+                return;
+            }
+
+            using(var scope = Program.Services.CreateScope())
+            {
+                var form = scope.ServiceProvider.GetRequiredService<AddEditBookForm>();
+
+                form.BookId = id;
+
+                if(form.ShowDialog() == DialogResult.OK)
+                {
+                     LoadBooks();
+                }
+            }
+        }
+
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BookLibrary.WinForms.Models;
+using BookLibrary.WinForms.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,14 @@ namespace BookLibrary.WinForms.Services
 
         public async Task<List<AuthorDto>> GetAllAsync()
         {
-            var authors = await _httpClient.GetFromJsonAsync<List<AuthorDto>>("api/authors");
-            return authors ?? new List<AuthorDto>();
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AppSession.Token);
+
+            var response = await _httpClient.GetAsync("api/authors");
+
+            response.EnsureSuccessStatusCode();
+
+            return  await response.Content.ReadAsAsync<List<AuthorDto>>();
 
         }
     }
