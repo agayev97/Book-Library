@@ -41,6 +41,13 @@ namespace BookLibrary.Application.Services
             await _bookRepository.AddAsync(book);
             await _bookRepository.SaveChangesAsync();
 
+            foreach(var authorId in bookDto.AuthorIds)
+            {
+                await _bookRepository.AddAuthorToBookAsync(book.Id, authorId);
+            }
+
+            await _bookRepository.SaveChangesAsync();
+
             return _mapper.Map<BookDto>(book);
         }
 

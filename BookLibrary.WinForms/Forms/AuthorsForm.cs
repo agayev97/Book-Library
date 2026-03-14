@@ -10,11 +10,13 @@ using System.Windows.Forms;
 
 namespace BookLibrary.WinForms.Forms
 {
-    public partial class AuthorsForm : Form
+    public partial class FormAuthors : Form
     {
-        public AuthorsForm()
+        public FormAuthors()
         {
             InitializeComponent();
         }
+
+       
     }
 }

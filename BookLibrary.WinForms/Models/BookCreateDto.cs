@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace BookLibrary.WinForms.Models
 {
-    public class BookDto
-    {
-        public int Id { get; set; }
+    public class BookCreateDto
+    { 
         public string Title { get; set; }
+        public List<int> AuthorIds { get; set; } = new List<int>();
         public int PublishedYear { get; set; }
         public bool IsAvailable { get; set; }
-
-        public List<int> AuthorIds { get; set; }
-        public List<string> Authors { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace BookLibrary.WinForms.Session
         public static string? UserName {  get; set; }
         public static string? Role {  get; set; }
 
-        public static bool IsAuthenticcated =>
+        public static bool IsAuthenticated =>
             !string.IsNullOrEmpty(Token);
 
         public static void Clear()

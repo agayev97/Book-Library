@@ -38,14 +38,11 @@
             panelHeader = new Panel();
             label2 = new Label();
             btnLogout = new Button();
-            dgvBooks = new DataGridView();
             panelCard = new Panel();
             btnSearch = new Button();
             txtSearch = new TextBox();
             panelSidebar.SuspendLayout();
             panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvBooks).BeginInit();
-            panelCard.SuspendLayout();
             SuspendLayout();
             // 
             // panelSidebar
@@ -164,6 +161,7 @@
             // 
             // btnLogout
             // 
+            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnLogout.BackColor = Color.Red;
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.ForeColor = Color.White;
@@ -184,17 +182,16 @@
             dgvBooks.Name = "dgvBooks";
             dgvBooks.ReadOnly = true;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBooks.Size = new Size(672, 378);
+            dgvBooks.Size = new Size(622, 378);
             dgvBooks.TabIndex = 4;
             // 
             // panelCard
             // 
-            panelCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelCard.BackColor = Color.White;
-            panelCard.Controls.Add(dgvBooks);
-            panelCard.Location = new Point(200, 66);
+            panelCard.Dock = DockStyle.Fill;
+            panelCard.Location = new Point(200, 60);
             panelCard.Name = "panelCard";
-            panelCard.Size = new Size(672, 378);
+            panelCard.Size = new Size(622, 378);
             panelCard.TabIndex = 11;
             // 
             // btnSearch
@@ -232,8 +229,6 @@
             panelSidebar.PerformLayout();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvBooks).EndInit();
-            panelCard.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -250,7 +245,6 @@
         private Panel panelHeader;
         private Button btnLogout;
         private Label label2;
-        private DataGridView dgvBooks;
         private Panel panelCard;
         private Button btnSearch;
         private TextBox txtSearch;

@@ -14,14 +14,12 @@ namespace BookLibrary.WinForms.Forms
     public partial class LoginForm : Form
     {
         private readonly AuthApiService _authService;
-        private readonly MainForm _mainForm;
+        
 
         public LoginForm(AuthApiService authApiService, MainForm mainForm)
         {
             InitializeComponent();
             _authService = authApiService;
-            _mainForm = mainForm;
-
             // Set the default button for the form
             this.AcceptButton = loginButton;
         }
@@ -64,8 +62,15 @@ namespace BookLibrary.WinForms.Forms
                 AppSession.Role = loginResponse.Role;
 
                 // Open main form
+                var _mainForm = Program.Services.GetRequiredService<MainForm>();
+                _mainForm.FormClosed += (s, args) =>
+                {
+                    this.Show();
+                    txtPassword.Clear();
+                };
+
                 _mainForm.Show();
-                //this.Hide();
+                this.Hide();
             }
             catch (HttpRequestException)
             {
