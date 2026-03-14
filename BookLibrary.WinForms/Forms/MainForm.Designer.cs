@@ -147,6 +147,7 @@
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(684, 60);
             panelHeader.TabIndex = 1;
+           
             // 
             // label2
             // 
