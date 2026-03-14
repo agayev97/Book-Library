@@ -174,16 +174,16 @@
             // 
             // dgvBooks
             // 
-            dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvBooks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBooks.Dock = DockStyle.Fill;
-            dgvBooks.Location = new Point(0, 0);
-            dgvBooks.MultiSelect = false;
-            dgvBooks.Name = "dgvBooks";
-            dgvBooks.ReadOnly = true;
-            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBooks.Size = new Size(622, 378);
-            dgvBooks.TabIndex = 4;
+            //dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //dgvBooks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            //dgvBooks.Dock = DockStyle.Fill;
+            //dgvBooks.Location = new Point(0, 0);
+            //dgvBooks.MultiSelect = false;
+            //dgvBooks.Name = "dgvBooks";
+            //dgvBooks.ReadOnly = true;
+            //dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //dgvBooks.Size = new Size(622, 378);
+            //dgvBooks.TabIndex = 4;
             // 
             // panelCard
             // 
